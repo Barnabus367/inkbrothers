@@ -1072,7 +1072,7 @@ export default function ExperimentalFeatures() {
   };
 
   return (
-    <section className="py-20 px-4 relative">
+    <section className="relative py-20 px-4 ink-anthracite section-flow z-20 -mt-8">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">

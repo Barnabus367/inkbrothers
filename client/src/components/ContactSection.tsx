@@ -27,7 +27,7 @@ export default function ContactSection() {
   };
 
   return (
-    <section id="connect" className="py-20 px-4 ink-black">
+    <section id="connect" className="relative py-20 px-4 ink-black section-flow z-20 -mt-8">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16 scroll-animate">
           <h2 className="font-bebas text-5xl md:text-6xl mb-4 text-ink-white section-title">
@@ -176,6 +176,9 @@ export default function ContactSection() {
           </div>
         </div>
       </div>
+      
+      {/* Gradient fade overlay for smooth transition */}
+      <div className="section-fade-bottom pointer-events-none absolute bottom-0 left-0 w-full h-32 z-10"></div>
     </section>
   );
 }
