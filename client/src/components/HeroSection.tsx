@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import smokeTexture from "@assets/smoke-texture-wallpaper-dark-background_1749913309315_1749914968513.jpg";
 import heroBackground from "@assets/image_1749869009808.png";
 
 export default function HeroSection() {
@@ -58,16 +57,26 @@ export default function HeroSection() {
           ))}
         </div>
       </div>
-      {/* Dynamic Smoke Overlay */}
+      {/* Dynamic Smoke Video Overlay */}
       <div className="absolute inset-0 z-10">
-        <img
-          src={smokeTexture}
-          alt=""
-          className="w-full h-full object-cover opacity-30 mix-blend-screen animate-smoke-drift"
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="w-full h-full object-cover opacity-30 mix-blend-screen pointer-events-none"
           style={{
-            transform: `translateX(${mousePosition.x * 20 - 10}px) translateY(${mousePosition.y * 20 - 10}px)`,
+            position: "absolute",
+            inset: 0,
+            zIndex: 0,
+            pointerEvents: "none",
+            objectFit: "cover",
+            width: "100%",
+            height: "100%"
           }}
-        />
+        >
+          <source src="/smoke-video.mp4" type="video/mp4" />
+        </video>
       </div>
       {/* Interactive Light Beam */}
       <div
