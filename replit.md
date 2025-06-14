@@ -107,7 +107,8 @@ This is a full-stack web application for InkBrothers Studio Zürich, a modern ta
 
 ```
 Changelog:
-- June 14, 2025. Initial setup
+- June 14, 2025. Initial setup of full-stack application structure
+- June 14, 2025. Complete implementation of InkBrothers Studio website with dark theme, animations, and all sections
 ```
 
 ## User Preferences
