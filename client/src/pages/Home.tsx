@@ -13,11 +13,11 @@ export default function Home() {
     // Initialize scroll animations
     const observerOptions = {
       threshold: 0.1,
-      rootMargin: "0px 0px -50px 0px"
+      rootMargin: "0px 0px -50px 0px",
     };
 
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
+      entries.forEach((entry) => {
         if (entry.isIntersecting) {
           entry.target.classList.add("visible");
         }
@@ -25,7 +25,7 @@ export default function Home() {
     }, observerOptions);
 
     // Observe all scroll-animate elements
-    document.querySelectorAll(".scroll-animate").forEach(el => {
+    document.querySelectorAll(".scroll-animate").forEach((el) => {
       observer.observe(el);
     });
 
@@ -34,7 +34,8 @@ export default function Home() {
       const scrolled = window.pageYOffset;
       const heroContent = document.querySelector(".hero-content");
       if (heroContent && scrolled < window.innerHeight) {
-        (heroContent as HTMLElement).style.transform = `translateY(${scrolled * 0.5}px)`;
+        (heroContent as HTMLElement).style.transform =
+          `translateY(${scrolled * 0.5}px)`;
       }
     };
 

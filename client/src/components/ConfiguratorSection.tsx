@@ -1,42 +1,54 @@
 import { useState } from "react";
 import { Palette, Camera, Ruler, User } from "lucide-react";
+import previewArm from "@assets/preview-arm.svg";
+import previewChest from "@assets/preview-chest.svg";
+import previewBack from "@assets/preview-back.svg";
+import previewLeg from "@assets/preview-leg.svg";
 
 const tattooStyles = [
   {
     id: "blackgrey",
     name: "BLACK & GREY",
     description: "Klassisch, zeitlos, ausdrucksstark",
-    icon: Palette
+    icon: Palette,
   },
   {
     id: "realism",
     name: "REALISM",
     description: "Fotorealistische Darstellungen",
-    icon: Camera
+    icon: Camera,
   },
   {
     id: "fineline",
     name: "FINELINE",
     description: "Filigrane, minimalistische Designs",
-    icon: Ruler
+    icon: Ruler,
   },
   {
     id: "neotraditional",
     name: "NEO TRADITIONAL",
     description: "Moderne Interpretation klassischer Stile",
-    icon: User
+    icon: User,
   },
   {
     id: "geometric",
     name: "GEOMETRIC",
     description: "Präzise Formen und Muster",
-    icon: Palette
-  }
+    icon: Palette,
+  },
+];
+
+const bodyParts = [
+  { id: "arm", name: "Oberarm", preview: previewArm },
+  { id: "chest", name: "Brust", preview: previewChest },
+  { id: "back", name: "Rücken", preview: previewBack },
+  { id: "leg", name: "Bein", preview: previewLeg },
 ];
 
 export default function ConfiguratorSection() {
   const [currentStep, setCurrentStep] = useState(1);
   const [selectedStyle, setSelectedStyle] = useState<string>("");
+  const [selectedBodyPart, setSelectedBodyPart] = useState<string>("");
   const [formData, setFormData] = useState({
     style: "",
     description: "",
@@ -44,14 +56,20 @@ export default function ConfiguratorSection() {
     location: "",
     name: "",
     email: "",
-    message: ""
+    message: "",
   });
 
   const progress = (currentStep / 4) * 100;
 
   const handleStyleSelect = (styleId: string) => {
     setSelectedStyle(styleId);
-    setFormData(prev => ({ ...prev, style: styleId }));
+    setFormData((prev) => ({ ...prev, style: styleId }));
+  };
+
+  const handleBodyPartChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const bodyPart = e.target.value;
+    setSelectedBodyPart(bodyPart);
+    setFormData((prev) => ({ ...prev, location: bodyPart }));
   };
 
   const nextStep = () => {
@@ -74,7 +92,10 @@ export default function ConfiguratorSection() {
   };
 
   return (
-    <section id="konfigurator" className="py-20 px-4 ink-anthracite grunge-texture">
+    <section
+      id="konfigurator"
+      className="py-20 px-4 ink-anthracite grunge-texture"
+    >
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-16 scroll-animate">
           <h2 className="font-bebas text-5xl md:text-6xl mb-4 text-ink-white section-title">
@@ -84,7 +105,7 @@ export default function ConfiguratorSection() {
             Plane dein perfektes Tattoo in 4 einfachen Schritten
           </p>
         </div>
-        
+
         {/* Progress Bar */}
         <div className="mb-12 scroll-animate">
           <div className="flex justify-between items-center mb-4">
@@ -96,21 +117,21 @@ export default function ConfiguratorSection() {
             </span>
           </div>
           <div className="progress-bar">
-            <div 
-              className="progress-fill" 
+            <div
+              className="progress-fill"
               style={{ width: `${progress}%` }}
             ></div>
           </div>
         </div>
-        
+
         {/* Configurator Form */}
         <div className="ink-black rounded-lg p-8 shadow-2xl scroll-animate">
           {currentStep === 1 && (
             <div>
               <h3 className="font-bebas text-3xl text-ink-white mb-8">
-                WÄHLE DEINEN STIL
+                WAS FÜR EIN STYLE?
               </h3>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {tattooStyles.map((style) => {
                   const IconComponent = style.icon;
@@ -143,9 +164,9 @@ export default function ConfiguratorSection() {
           {currentStep === 2 && (
             <div>
               <h3 className="font-bebas text-3xl text-ink-white mb-8">
-                BESCHREIBE DEIN WUNSCHMOTIV
+                ERZÄHL UNS VON DEINER IDEE
               </h3>
-              
+
               <div className="space-y-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-300 mb-2">
@@ -154,7 +175,12 @@ export default function ConfiguratorSection() {
                   <textarea
                     rows={8}
                     value={formData.description}
-                    onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
+                    onChange={(e) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        description: e.target.value,
+                      }))
+                    }
                     className="form-textarea"
                     placeholder="Erzähl uns von deiner Tattoo-Idee... (z.B. Stil, Motive, Bedeutung, Inspiration, Größenvorstellung)"
                   />
@@ -168,7 +194,7 @@ export default function ConfiguratorSection() {
               <h3 className="font-bebas text-3xl text-ink-white mb-8">
                 GRÖSSE UND STELLE
               </h3>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-300 mb-2">
@@ -176,7 +202,9 @@ export default function ConfiguratorSection() {
                   </label>
                   <select
                     value={formData.size}
-                    onChange={(e) => setFormData(prev => ({ ...prev, size: e.target.value }))}
+                    onChange={(e) =>
+                      setFormData((prev) => ({ ...prev, size: e.target.value }))
+                    }
                     className="form-input"
                   >
                     <option value="">Größe wählen</option>
@@ -186,14 +214,19 @@ export default function ConfiguratorSection() {
                     <option value="xlarge">Sehr groß (über 25cm)</option>
                   </select>
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium text-gray-300 mb-2">
                     Körperstelle
                   </label>
                   <select
                     value={formData.location}
-                    onChange={(e) => setFormData(prev => ({ ...prev, location: e.target.value }))}
+                    onChange={(e) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        location: e.target.value,
+                      }))
+                    }
                     className="form-input"
                   >
                     <option value="">Stelle wählen</option>
@@ -216,7 +249,7 @@ export default function ConfiguratorSection() {
               <h3 className="font-bebas text-3xl text-ink-white mb-8">
                 KONTAKTDATEN
               </h3>
-              
+
               <div className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
@@ -226,12 +259,17 @@ export default function ConfiguratorSection() {
                     <input
                       type="text"
                       value={formData.name}
-                      onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          name: e.target.value,
+                        }))
+                      }
                       className="form-input"
                       placeholder="Dein Name"
                     />
                   </div>
-                  
+
                   <div>
                     <label className="block text-sm font-medium text-gray-300 mb-2">
                       E-Mail
@@ -239,13 +277,18 @@ export default function ConfiguratorSection() {
                     <input
                       type="email"
                       value={formData.email}
-                      onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          email: e.target.value,
+                        }))
+                      }
                       className="form-input"
                       placeholder="deine@email.com"
                     />
                   </div>
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium text-gray-300 mb-2">
                     Zusätzliche Nachricht (optional)
@@ -253,7 +296,12 @@ export default function ConfiguratorSection() {
                   <textarea
                     rows={4}
                     value={formData.message}
-                    onChange={(e) => setFormData(prev => ({ ...prev, message: e.target.value }))}
+                    onChange={(e) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        message: e.target.value,
+                      }))
+                    }
                     className="form-textarea"
                     placeholder="Weitere Informationen oder Fragen..."
                   />
@@ -261,7 +309,7 @@ export default function ConfiguratorSection() {
               </div>
             </div>
           )}
-          
+
           {/* Navigation Buttons */}
           <div className="flex justify-between mt-12">
             <button
@@ -275,19 +323,13 @@ export default function ConfiguratorSection() {
             >
               ZURÜCK
             </button>
-            
+
             {currentStep < 4 ? (
-              <button
-                onClick={nextStep}
-                className="btn-cta"
-              >
+              <button onClick={nextStep} className="btn-cta">
                 WEITER
               </button>
             ) : (
-              <button
-                onClick={handleSubmit}
-                className="btn-cta"
-              >
+              <button onClick={handleSubmit} className="btn-cta">
                 KONFIGURATION SENDEN
               </button>
             )}

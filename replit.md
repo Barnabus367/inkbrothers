@@ -7,6 +7,7 @@ This is a full-stack web application for InkBrothers Studio Zürich, a modern ta
 ## System Architecture
 
 ### Frontend Architecture
+
 - **Framework**: React with TypeScript
 - **Styling**: Tailwind CSS with custom CSS variables for the dark theme
 - **Component Library**: shadcn/ui components built on Radix UI primitives
@@ -15,6 +16,7 @@ This is a full-stack web application for InkBrothers Studio Zürich, a modern ta
 - **Build Tool**: Vite for development and production builds
 
 ### Backend Architecture
+
 - **Framework**: Express.js with TypeScript
 - **Database ORM**: Drizzle ORM with PostgreSQL dialect
 - **Session Management**: Uses connect-pg-simple for PostgreSQL session storage
@@ -22,6 +24,7 @@ This is a full-stack web application for InkBrothers Studio Zürich, a modern ta
 - **Development Server**: TSX for TypeScript execution in development
 
 ### Database Architecture
+
 - **Database**: PostgreSQL (configured for Neon serverless)
 - **Schema Management**: Drizzle Kit for migrations and schema management
 - **Current Schema**: Basic user management with username/password authentication
@@ -29,6 +32,7 @@ This is a full-stack web application for InkBrothers Studio Zürich, a modern ta
 ## Key Components
 
 ### Frontend Components
+
 - **Navigation**: Sticky navigation with smooth scrolling and mobile responsiveness
 - **Hero Section**: Full-screen hero with parallax effects and custom animations
 - **Portfolio Section**: Image grid with hover effects and Instagram integration
@@ -38,11 +42,13 @@ This is a full-stack web application for InkBrothers Studio Zürich, a modern ta
 - **Experimental Lab**: Advanced interactive features including KI Vision (camera-based body scanning), Pain Simulator (personalized pain prediction), and Neural Designer (AI-powered tattoo design generation)
 
 ### UI Components
+
 - Complete shadcn/ui component library including buttons, forms, dialogs, tooltips, etc.
 - Custom styling with dark theme and red accent colors (ink-red: hsl(355, 59%, 40%))
 - Responsive design with mobile-first approach
 
 ### Backend Structure
+
 - **Routes**: Centralized route registration in `server/routes.ts`
 - **Storage**: Abstracted storage interface with in-memory implementation
 - **Error Handling**: Global error middleware for consistent API responses
@@ -51,18 +57,21 @@ This is a full-stack web application for InkBrothers Studio Zürich, a modern ta
 ## Data Flow
 
 ### Client-Server Communication
+
 1. Frontend makes HTTP requests to `/api/*` endpoints
 2. Express middleware handles CORS, parsing, and logging
 3. Route handlers use the storage interface for data operations
 4. Responses are formatted consistently with error handling
 
 ### Development Workflow
+
 1. Vite serves the React frontend in development mode
 2. Express server handles API requests and serves static files in production
 3. Database migrations are managed through Drizzle Kit
 4. Hot reloading enabled for both frontend and backend code
 
 ### Authentication Flow
+
 - Basic user schema with username/password fields
 - Session management ready for implementation
 - Storage interface supports user CRUD operations
@@ -70,6 +79,7 @@ This is a full-stack web application for InkBrothers Studio Zürich, a modern ta
 ## External Dependencies
 
 ### Frontend Dependencies
+
 - **React Ecosystem**: React 18, React DOM, React Router (Wouter)
 - **UI/Styling**: Tailwind CSS, Radix UI components, Lucide React icons
 - **State Management**: TanStack React Query
@@ -77,12 +87,14 @@ This is a full-stack web application for InkBrothers Studio Zürich, a modern ta
 - **Utilities**: clsx, class-variance-authority, date-fns
 
 ### Backend Dependencies
+
 - **Server**: Express.js, TypeScript execution (tsx)
 - **Database**: Drizzle ORM, Neon serverless PostgreSQL driver
 - **Session**: connect-pg-simple for PostgreSQL sessions
 - **Build**: esbuild for production bundling
 
 ### Development Tools
+
 - **Build Tools**: Vite, esbuild, TypeScript compiler
 - **Code Quality**: TypeScript for type safety
 - **Database Tools**: Drizzle Kit for schema management
@@ -90,16 +102,19 @@ This is a full-stack web application for InkBrothers Studio Zürich, a modern ta
 ## Deployment Strategy
 
 ### Production Build
+
 1. Frontend: Vite builds React app to `dist/public`
 2. Backend: esbuild bundles Express server to `dist/index.js`
 3. Static files served by Express in production mode
 
 ### Environment Configuration
+
 - **Development**: Uses tsx for TypeScript execution, Vite dev server
 - **Production**: Node.js serves bundled application
 - **Database**: PostgreSQL connection via DATABASE_URL environment variable
 
 ### Replit Configuration
+
 - **Modules**: Node.js 20, web server, PostgreSQL 16
 - **Ports**: Internal port 5000, external port 80
 - **Deployment**: Autoscale deployment target with build/start scripts

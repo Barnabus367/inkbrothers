@@ -24,7 +24,7 @@ export default function Navigation() {
     };
 
     window.addEventListener("scroll", handleScroll);
-    
+
     const navElement = navRef.current;
     if (navElement) {
       navElement.addEventListener("mousemove", handleMouseMove);
@@ -38,7 +38,10 @@ export default function Navigation() {
     };
   }, []);
 
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
+  const handleNavClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    targetId: string,
+  ) => {
     e.preventDefault();
     const target = document.querySelector(targetId);
     if (target) {
@@ -48,7 +51,7 @@ export default function Navigation() {
   };
 
   return (
-    <nav 
+    <nav
       ref={navRef}
       className={`fixed top-0 w-full z-50 transition-all duration-500 ${
         isScrolled ? "bg-black/95 backdrop-blur-sm" : "bg-black/80"
@@ -57,7 +60,7 @@ export default function Navigation() {
         background: `linear-gradient(90deg, 
           rgba(0,0,0,0.9) 0%, 
           rgba(166,40,46,${mousePosition.x * 0.1}) ${mousePosition.x * 100}%, 
-          rgba(0,0,0,0.9) 100%)`
+          rgba(0,0,0,0.9) 100%)`,
       }}
     >
       {/* Animated Background Particles */}
@@ -67,10 +70,10 @@ export default function Navigation() {
             key={i}
             className="absolute w-px h-full bg-gradient-to-b from-transparent via-red-500/20 to-transparent"
             style={{
-              left: `${(i * 8) + (mousePosition.x * 10)}%`,
+              left: `${i * 8 + mousePosition.x * 10}%`,
               transform: `translateX(${Math.sin(mousePosition.x * Math.PI * 2) * 20}px)`,
-              opacity: 0.3 + (mousePosition.x * 0.4),
-              transition: 'all 0.3s ease-out'
+              opacity: 0.3 + mousePosition.x * 0.4,
+              transition: "all 0.3s ease-out",
             }}
           />
         ))}
@@ -80,15 +83,18 @@ export default function Navigation() {
         <div className="flex items-center justify-between h-16">
           {/* Interactive Logo */}
           <div className="flex-shrink-0 relative group">
-            <span 
+            <span
               className="font-bebas text-2xl text-ink-white tracking-wider transition-all duration-300 hover:scale-110"
               style={{
-                textShadow: `0 0 ${10 + mousePosition.x * 20}px rgba(166, 40, 46, ${0.5 + mousePosition.x * 0.5})`
+                textShadow: `0 0 ${10 + mousePosition.x * 20}px rgba(166, 40, 46, ${0.5 + mousePosition.x * 0.5})`,
               }}
             >
-              INK<span className="text-ink-red animate-neon-flicker">BROTHERS</span>
+              INK
+              <span className="text-ink-red animate-neon-flicker">
+                BROTHERS
+              </span>
             </span>
-            
+
             {/* Logo particles */}
             <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300">
               {Array.from({ length: 5 }).map((_, i) => (
@@ -98,13 +104,13 @@ export default function Navigation() {
                   style={{
                     left: `${20 + i * 15}%`,
                     top: `${30 + (i % 2) * 40}%`,
-                    animationDelay: `${i * 0.2}s`
+                    animationDelay: `${i * 0.2}s`,
                   }}
                 />
               ))}
             </div>
           </div>
-          
+
           {/* Advanced Desktop Navigation */}
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-8">
@@ -112,28 +118,28 @@ export default function Navigation() {
                 { href: "#work", text: "WORK" },
                 { href: "#artists", text: "ARTISTS" },
                 { href: "#konfigurator", text: "KONFIGURATOR" },
-                { href: "#connect", text: "CONNECT" }
+                { href: "#connect", text: "CONNECT" },
               ].map((item, index) => (
-                <a 
+                <a
                   key={item.href}
-                  href={item.href} 
+                  href={item.href}
                   onClick={(e) => handleNavClick(e, item.href)}
                   className="relative group nav-link-advanced transition-all duration-300"
                   style={{
                     transform: `translateY(${Math.sin((mousePosition.x + index * 0.25) * Math.PI * 2) * 3}px)`,
-                    transition: 'all 0.3s ease-out'
+                    transition: "all 0.3s ease-out",
                   }}
                 >
                   <span className="relative z-10">{item.text}</span>
-                  
+
                   {/* Hover effect background */}
                   <div className="absolute inset-0 bg-red-600/20 scale-0 group-hover:scale-100 transition-transform duration-300 rounded" />
-                  
+
                   {/* Animated underline */}
                   <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-red-500 group-hover:w-full transition-all duration-300" />
-                  
+
                   {/* Glitch effect on hover */}
-                  <span 
+                  <span
                     className="absolute inset-0 text-red-500 opacity-0 group-hover:opacity-50 group-hover:animate-glitch-1"
                     aria-hidden="true"
                   >
@@ -141,14 +147,16 @@ export default function Navigation() {
                   </span>
                 </a>
               ))}
-              
+
               {/* Enhanced CTA Button */}
               <button className="relative btn-cta-advanced group overflow-hidden">
-                <span className="relative z-10 font-bold tracking-wider">TERMIN BUCHEN</span>
-                
+                <span className="relative z-10 font-bold tracking-wider">
+                  TERMIN BUCHEN
+                </span>
+
                 {/* Animated background */}
                 <div className="absolute inset-0 bg-gradient-to-r from-red-600 via-red-700 to-red-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
-                
+
                 {/* Particle burst effect */}
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   {Array.from({ length: 8 }).map((_, i) => (
@@ -158,7 +166,7 @@ export default function Navigation() {
                       style={{
                         left: `${10 + i * 10}%`,
                         top: `${20 + (i % 3) * 20}%`,
-                        animationDelay: `${i * 0.1}s`
+                        animationDelay: `${i * 0.1}s`,
                       }}
                     />
                   ))}
@@ -166,10 +174,10 @@ export default function Navigation() {
               </button>
             </div>
           </div>
-          
+
           {/* Enhanced Mobile menu button */}
           <div className="md:hidden">
-            <button 
+            <button
               onClick={() => setIsOpen(!isOpen)}
               className="relative text-ink-white hover:text-ink-red transition-all duration-300 transform hover:scale-110 hover:rotate-180"
             >
@@ -178,7 +186,7 @@ export default function Navigation() {
               ) : (
                 <Menu className="h-6 w-6" />
               )}
-              
+
               {/* Button glow */}
               <div className="absolute inset-0 bg-red-500 blur-md opacity-0 hover:opacity-30 transition-opacity duration-300 rounded-full" />
             </button>
@@ -193,11 +201,11 @@ export default function Navigation() {
                 { href: "#work", text: "WORK" },
                 { href: "#artists", text: "ARTISTS" },
                 { href: "#konfigurator", text: "KONFIGURATOR" },
-                { href: "#connect", text: "CONNECT" }
+                { href: "#connect", text: "CONNECT" },
               ].map((item, index) => (
-                <a 
+                <a
                   key={item.href}
-                  href={item.href} 
+                  href={item.href}
                   onClick={(e) => handleNavClick(e, item.href)}
                   className="nav-link block px-3 py-2 relative group animate-fade-in-up"
                   style={{ animationDelay: `${index * 0.1}s` }}
@@ -206,25 +214,28 @@ export default function Navigation() {
                   <div className="absolute inset-0 bg-red-600/20 scale-0 group-hover:scale-100 transition-transform duration-300 rounded" />
                 </a>
               ))}
-              
-              <button className="btn-cta w-full mt-2 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
+
+              <button
+                className="btn-cta w-full mt-2 animate-fade-in-up"
+                style={{ animationDelay: "0.4s" }}
+              >
                 TERMIN BUCHEN
               </button>
             </div>
           </div>
         )}
       </div>
-      
+
       {/* Enhanced Animated Brushstroke */}
       <BrushStroke />
-      
+
       {/* Dynamic Light Trail */}
-      <div 
+      <div
         className="absolute bottom-0 h-0.5 bg-gradient-to-r from-transparent via-red-500 to-transparent transition-all duration-300"
         style={{
           left: `${mousePosition.x * 80}%`,
-          width: '20%',
-          opacity: mousePosition.x > 0 ? 0.8 : 0
+          width: "20%",
+          opacity: mousePosition.x > 0 ? 0.8 : 0,
         }}
       />
     </nav>

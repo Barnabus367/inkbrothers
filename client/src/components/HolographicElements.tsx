@@ -10,23 +10,23 @@ function HolographicTattooPreview() {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
+
       // Holographic grid effect
       ctx.strokeStyle = `rgba(239, 68, 68, ${0.3 + Math.sin(Date.now() * 0.003) * 0.2})`;
       ctx.lineWidth = 1;
-      
+
       for (let i = 0; i < canvas.width; i += 20) {
         ctx.beginPath();
         ctx.moveTo(i, 0);
         ctx.lineTo(i, canvas.height);
         ctx.stroke();
       }
-      
+
       for (let i = 0; i < canvas.height; i += 20) {
         ctx.beginPath();
         ctx.moveTo(0, i);
@@ -38,8 +38,9 @@ function HolographicTattooPreview() {
       const time = Date.now() * 0.001;
       for (let i = 0; i < 50; i++) {
         const x = (mousePosition.x + Math.sin(time + i) * 100) % canvas.width;
-        const y = (mousePosition.y + Math.cos(time + i * 0.5) * 50) % canvas.height;
-        
+        const y =
+          (mousePosition.y + Math.cos(time + i * 0.5) * 50) % canvas.height;
+
         ctx.fillStyle = `hsla(${(time * 50 + i * 10) % 360}, 70%, 60%, ${0.6 + Math.sin(time + i) * 0.4})`;
         ctx.beginPath();
         ctx.arc(x, y, 2, 0, Math.PI * 2);
@@ -61,7 +62,7 @@ function HolographicTattooPreview() {
     if (rect) {
       setMousePosition({
         x: e.clientX - rect.left,
-        y: e.clientY - rect.top
+        y: e.clientY - rect.top,
       });
     }
   };
@@ -74,14 +75,14 @@ function HolographicTattooPreview() {
           onClick={() => setIsActive(!isActive)}
           className={`px-4 py-2 rounded-lg transition-all duration-300 ${
             isActive
-              ? 'bg-red-500 text-white shadow-[0_0_20px_rgba(239,68,68,0.5)]'
-              : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+              ? "bg-red-500 text-white shadow-[0_0_20px_rgba(239,68,68,0.5)]"
+              : "bg-gray-700 text-gray-300 hover:bg-gray-600"
           }`}
         >
-          {isActive ? 'Deaktivieren' : 'Aktivieren'}
+          {isActive ? "Deaktivieren" : "Aktivieren"}
         </button>
       </div>
-      
+
       <canvas
         ref={canvasRef}
         width={400}
@@ -89,10 +90,11 @@ function HolographicTattooPreview() {
         className="w-full h-64 border border-red-500/20 rounded-lg cursor-crosshair"
         onMouseMove={handleMouseMove}
         style={{
-          background: 'linear-gradient(45deg, rgba(0,0,0,0.9) 0%, rgba(30,30,30,0.9) 100%)'
+          background:
+            "linear-gradient(45deg, rgba(0,0,0,0.9) 0%, rgba(30,30,30,0.9) 100%)",
         }}
       />
-      
+
       <div className="mt-4 text-center">
         <p className="text-gray-400 text-sm">
           Bewege die Maus für interaktive Hologramm-Effekte
@@ -104,15 +106,23 @@ function HolographicTattooPreview() {
 
 // Quantum Tattoo Designer
 function QuantumTattooDesigner() {
-  const [quantumState, setQuantumState] = useState('superposition');
+  const [quantumState, setQuantumState] = useState("superposition");
   const [complexity, setComplexity] = useState(50);
-  const [dimension, setDimension] = useState('3D');
+  const [dimension, setDimension] = useState("3D");
 
   const quantumStates = [
-    { id: 'superposition', name: 'Superposition', color: 'from-blue-500 to-purple-500' },
-    { id: 'entanglement', name: 'Verschränkung', color: 'from-green-500 to-cyan-500' },
-    { id: 'collapse', name: 'Kollaps', color: 'from-red-500 to-orange-500' },
-    { id: 'coherence', name: 'Kohärenz', color: 'from-purple-500 to-pink-500' }
+    {
+      id: "superposition",
+      name: "Superposition",
+      color: "from-blue-500 to-purple-500",
+    },
+    {
+      id: "entanglement",
+      name: "Verschränkung",
+      color: "from-green-500 to-cyan-500",
+    },
+    { id: "collapse", name: "Kollaps", color: "from-red-500 to-orange-500" },
+    { id: "coherence", name: "Kohärenz", color: "from-purple-500 to-pink-500" },
   ];
 
   return (
@@ -120,13 +130,17 @@ function QuantumTattooDesigner() {
       <div className="flex items-center gap-3 mb-6">
         <div className="w-6 h-6 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-full animate-spin" />
         <h3 className="text-xl font-bold text-white">Quantum Designer</h3>
-        <span className="px-2 py-1 bg-purple-500/20 text-purple-400 text-xs rounded-full">QUANTUM</span>
+        <span className="px-2 py-1 bg-purple-500/20 text-purple-400 text-xs rounded-full">
+          QUANTUM
+        </span>
       </div>
 
       <div className="space-y-6">
         {/* Quantum State Selector */}
         <div>
-          <label className="text-white font-medium mb-3 block">Quantum Zustand</label>
+          <label className="text-white font-medium mb-3 block">
+            Quantum Zustand
+          </label>
           <div className="grid grid-cols-2 gap-2">
             {quantumStates.map((state) => (
               <button
@@ -134,11 +148,13 @@ function QuantumTattooDesigner() {
                 onClick={() => setQuantumState(state.id)}
                 className={`p-3 rounded-lg border transition-all duration-300 ${
                   quantumState === state.id
-                    ? 'border-purple-500 bg-purple-500/20 text-white'
-                    : 'border-gray-600 hover:border-purple-500/50 text-gray-400 hover:text-white'
+                    ? "border-purple-500 bg-purple-500/20 text-white"
+                    : "border-gray-600 hover:border-purple-500/50 text-gray-400 hover:text-white"
                 }`}
               >
-                <div className={`w-full h-2 bg-gradient-to-r ${state.color} rounded-full mb-2`} />
+                <div
+                  className={`w-full h-2 bg-gradient-to-r ${state.color} rounded-full mb-2`}
+                />
                 {state.name}
               </button>
             ))}
@@ -167,7 +183,7 @@ function QuantumTattooDesigner() {
                   style={{
                     left: `${Math.random() * 100}%`,
                     top: `${Math.random() * 100}%`,
-                    animationDelay: `${i * 0.1}s`
+                    animationDelay: `${i * 0.1}s`,
                   }}
                 />
               ))}
@@ -177,16 +193,18 @@ function QuantumTattooDesigner() {
 
         {/* Dimensional Matrix */}
         <div>
-          <label className="text-white font-medium mb-3 block">Dimensionale Matrix</label>
+          <label className="text-white font-medium mb-3 block">
+            Dimensionale Matrix
+          </label>
           <div className="flex gap-2">
-            {['2D', '3D', '4D', '∞D'].map((dim) => (
+            {["2D", "3D", "4D", "∞D"].map((dim) => (
               <button
                 key={dim}
                 onClick={() => setDimension(dim)}
                 className={`flex-1 py-2 px-3 rounded-lg transition-all duration-300 ${
                   dimension === dim
-                    ? 'bg-gradient-to-r from-purple-600 to-cyan-600 text-white'
-                    : 'bg-gray-700 text-gray-400 hover:bg-gray-600'
+                    ? "bg-gradient-to-r from-purple-600 to-cyan-600 text-white"
+                    : "bg-gray-700 text-gray-400 hover:bg-gray-600"
                 }`}
               >
                 {dim}
@@ -204,11 +222,13 @@ function QuantumTattooDesigner() {
                 <div className="absolute inset-2 border-4 border-cyan-500/30 rounded-full animate-spin animate-reverse" />
                 <div className="absolute inset-4 border-4 border-red-500/30 rounded-full animate-pulse" />
               </div>
-              <p className="text-white font-bold">Quantum State: {quantumState}</p>
+              <p className="text-white font-bold">
+                Quantum State: {quantumState}
+              </p>
               <p className="text-gray-400 text-sm">Dimension: {dimension}</p>
             </div>
           </div>
-          
+
           {/* Quantum particles */}
           <div className="absolute inset-0">
             {Array.from({ length: complexity / 10 }).map((_, i) => (
@@ -219,7 +239,7 @@ function QuantumTattooDesigner() {
                   left: `${Math.random() * 100}%`,
                   top: `${Math.random() * 100}%`,
                   animationDelay: `${i * 0.2}s`,
-                  animationDuration: `${1 + Math.random() * 2}s`
+                  animationDuration: `${1 + Math.random() * 2}s`,
                 }}
               />
             ))}
@@ -242,7 +262,7 @@ function BiometricTattooMatcher() {
 
   const startBiometricScan = () => {
     setScanning(true);
-    
+
     // Simulate biometric analysis
     setTimeout(() => {
       const mockData = {
@@ -250,11 +270,13 @@ function BiometricTattooMatcher() {
         veinPattern: "complex",
         muscleDensity: 75,
         sensitivity: 40,
-        healingFactor: 85
+        healingFactor: 85,
       };
-      
+
       setBiometricData(mockData);
-      setRecommendation("Empfehlung: Neo-Traditional Style mit mittlerer Linienbreite. Optimale Heilungszeit: 3-4 Wochen.");
+      setRecommendation(
+        "Empfehlung: Neo-Traditional Style mit mittlerer Linienbreite. Optimale Heilungszeit: 3-4 Wochen.",
+      );
       setScanning(false);
     }, 3000);
   };
@@ -264,7 +286,9 @@ function BiometricTattooMatcher() {
       <div className="flex items-center gap-3 mb-6">
         <div className="w-6 h-6 bg-gradient-to-r from-green-500 to-cyan-500 rounded-full" />
         <h3 className="text-xl font-bold text-white">Biometric Matcher</h3>
-        <span className="px-2 py-1 bg-green-500/20 text-green-400 text-xs rounded-full">MEDIZINISCH</span>
+        <span className="px-2 py-1 bg-green-500/20 text-green-400 text-xs rounded-full">
+          MEDIZINISCH
+        </span>
       </div>
 
       {!biometricData ? (
@@ -279,13 +303,15 @@ function BiometricTattooMatcher() {
               <div className="text-4xl">🫱</div>
             )}
           </div>
-          
+
           <button
             onClick={startBiometricScan}
             disabled={scanning}
             className="w-full bg-gradient-to-r from-green-600 to-cyan-600 hover:from-green-500 hover:to-cyan-500 disabled:from-gray-600 disabled:to-gray-600 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300"
           >
-            {scanning ? 'Biometrie wird gescannt...' : 'Biometrischen Scan starten'}
+            {scanning
+              ? "Biometrie wird gescannt..."
+              : "Biometrischen Scan starten"}
           </button>
         </div>
       ) : (
@@ -293,27 +319,37 @@ function BiometricTattooMatcher() {
           <div className="grid grid-cols-2 gap-4">
             <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-3">
               <div className="text-green-400 text-sm">Hautton</div>
-              <div className="text-white font-bold">{biometricData.skinTone}</div>
+              <div className="text-white font-bold">
+                {biometricData.skinTone}
+              </div>
             </div>
             <div className="bg-cyan-500/10 border border-cyan-500/30 rounded-lg p-3">
               <div className="text-cyan-400 text-sm">Venenmuster</div>
-              <div className="text-white font-bold">{biometricData.veinPattern}</div>
+              <div className="text-white font-bold">
+                {biometricData.veinPattern}
+              </div>
             </div>
             <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-3">
               <div className="text-blue-400 text-sm">Muskeldichte</div>
-              <div className="text-white font-bold">{biometricData.muscleDensity}%</div>
+              <div className="text-white font-bold">
+                {biometricData.muscleDensity}%
+              </div>
             </div>
             <div className="bg-purple-500/10 border border-purple-500/30 rounded-lg p-3">
               <div className="text-purple-400 text-sm">Heilungsfaktor</div>
-              <div className="text-white font-bold">{biometricData.healingFactor}%</div>
+              <div className="text-white font-bold">
+                {biometricData.healingFactor}%
+              </div>
             </div>
           </div>
-          
+
           <div className="bg-gradient-to-r from-green-500/10 to-cyan-500/10 border border-green-500/30 rounded-lg p-4">
-            <div className="text-green-400 font-medium mb-2">Personalisierte Empfehlung:</div>
+            <div className="text-green-400 font-medium mb-2">
+              Personalisierte Empfehlung:
+            </div>
             <p className="text-white">{recommendation}</p>
           </div>
-          
+
           <button
             onClick={() => {
               setBiometricData(null);
@@ -329,4 +365,8 @@ function BiometricTattooMatcher() {
   );
 }
 
-export { HolographicTattooPreview, QuantumTattooDesigner, BiometricTattooMatcher };
+export {
+  HolographicTattooPreview,
+  QuantumTattooDesigner,
+  BiometricTattooMatcher,
+};
