@@ -8,47 +8,14 @@ import xxxWork from "@assets/image_1749869022370.png";
 const crewMembers = [
   {
     id: 1,
-    name: "DAVID SIETE GATOS",
-    role: "Neo Traditional / Color",
-    experience: "10+ Jahre",
-    quote: "Jedes Tattoo erzählt eine Geschichte...",
-    specialties: ["Neo Traditional", "Color Work", "Portraits"],
-    instagram: "@davidsiete",
-    image: davidWork,
-    alt: "David Siete Gatos horror clown tattoo artwork - InkBrothers Studio Zürich"
-  },
-  {
-    id: 2,
-    name: "ROBERTO",
-    role: "Studio-Mitbesitzer",
+    name: "DAVID COELLO MISA",
+    role: "Master Tattoo Artist",
     experience: "15+ Jahre",
-    quote: "Wir sorgen dafür, dass alles läuft.",
-    specialties: ["Management", "Traditional", "Blackwork"],
-    instagram: "@roberto_ink",
-    image: robertoWork,
-    alt: "Roberto Egyptian mythology backpiece tattoo artwork - InkBrothers Studio"
-  },
-  {
-    id: 3,
-    name: "APO",
-    role: "Studio-Mitbesitzer",
-    experience: "12+ Jahre",
-    quote: "Das Studio ist unser Zuhause.",
-    specialties: ["Geometric", "Fineline", "Minimalist"],
-    instagram: "@apo_tattoo",
-    image: apoWork,
-    alt: "Apo surreal portrait tattoo artwork - InkBrothers Zürich"
-  },
-  {
-    id: 4,
-    name: "XXX",
-    role: "Studio-Mitbesitzer",
-    experience: "8+ Jahre",
-    quote: "Tattoo ist mehr als nur Kunst – es ist Leidenschaft.",
-    specialties: ["Japanese", "Realism", "Watercolor"],
-    instagram: "@xxx_artist",
-    image: xxxWork,
-    alt: "XXX dark portrait realism tattoo artwork - InkBrothers Studio Zürich"
+    quote: "Jedes Tattoo ist ein Kunstwerk, das eine Geschichte erzählt.",
+    specialties: ["Realism", "Black & Grey", "Portraits", "Neo Traditional"],
+    instagram: "@davidcoellomisa",
+    image: davidWork,
+    alt: "David Coello Misa - Master Tattoo Artist at InkBrothers Studio Zürich"
   }
 ];
 
@@ -122,11 +89,11 @@ export default function CrewSection() {
           <div className="relative inline-block">
             <h2 className="font-bebas text-6xl md:text-8xl mb-6 text-ink-white section-title relative">
               <span className="inline-block animate-reveal-text" style={{ animationDelay: '0.3s' }}>
-                UNSERE
+                DER
               </span>
               <br/>
               <span className="inline-block text-red-500 animate-reveal-text animate-neon-flicker" style={{ animationDelay: '0.6s' }}>
-                CREW
+                KÜNSTLER
               </span>
               
               {/* Dynamic underline */}
@@ -146,13 +113,14 @@ export default function CrewSection() {
           </div>
           
           <p className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto animate-typewriter">
-            Die Künstler hinter der Kunst
+            Der Meister hinter den Kunstwerken
           </p>
         </div>
         
-        {/* Advanced Crew Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
-          {crewMembers.map((member, index) => (
+        {/* Artist Showcase */}
+        <div className="flex justify-center">
+          <div className="max-w-md w-full">
+            {crewMembers.map((member, index) => (
             <div 
               key={member.id} 
               className="crew-card-advanced group relative scroll-animate"
@@ -279,6 +247,7 @@ export default function CrewSection() {
               </div>
             </div>
           ))}
+          </div>
         </div>
         
         {/* Call to Action */}
