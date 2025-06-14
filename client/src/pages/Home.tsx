@@ -6,6 +6,8 @@ import CrewSection from "@/components/CrewSection";
 import ConfiguratorSection from "@/components/ConfiguratorSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
+import ExperimentalFeatures from "@/components/ExperimentalFeatures";
+import NeuralInterfaceStudio from "@/components/NeuralInterfaceStudio";
 
 export default function Home() {
   useEffect(() => {
@@ -51,6 +53,8 @@ export default function Home() {
       <HeroSection />
       <PortfolioSection />
       <CrewSection />
+      <ExperimentalFeatures />
+      <NeuralInterfaceStudio />
       <ConfiguratorSection />
       <ContactSection />
       <Footer />
