@@ -132,7 +132,7 @@ Changelog:
 - June 14, 2025. Enhanced website with three major improvements: brightened hero image with white overlay, upgraded tattoo configurator with visual previews and studio-style language, added Zurich skyline to footer
 - June 14, 2025. Replaced static smoke background with dynamic MP4 video loop in hero section for enhanced visual impact
 - June 14, 2025. Implemented new hero background video (4343481-hd_1920_1080_24fps) with complete removal of smoke effects, positioned at z-index 0 with full-screen coverage and proper text layering
-- June 14, 2025. Updated all CTA buttons to modern rounded design with dark blood-orange colors (#B90000 to #E0003C), 12px border-radius, 48-56px height, and subtle hover scaling
+- June 14, 2025. Replaced all CTA buttons with brutal modern design: white background with black border, hover inverts to black background with white text, includes animated circular icon with 45° rotated arrow, responsive sizing with cubic-bezier animations
 ```
 
 ## User Preferences

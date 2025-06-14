@@ -149,9 +149,14 @@ export default function Navigation() {
               ))}
 
               {/* Enhanced CTA Button */}
-              <button className="btn-cta-advanced">
-                TERMIN BUCHEN
-              </button>
+              <a href="#kontakt" className="btn group overflow-visible">
+                <span className="relative z-[3]">TERMIN BUCHEN</span>
+                <div className="btn-icon-circle">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="m9 18 6-6-6-6"/>
+                  </svg>
+                </div>
+              </a>
             </div>
           </div>
 

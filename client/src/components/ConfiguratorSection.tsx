@@ -350,12 +350,22 @@ export default function ConfiguratorSection() {
             </button>
 
             {currentStep < 4 ? (
-              <button onClick={nextStep} className="btn-cta">
-                WEITER
+              <button onClick={nextStep} className="btn group overflow-visible">
+                <span className="relative z-[3]">WEITER</span>
+                <div className="btn-icon-circle">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="m9 18 6-6-6-6"/>
+                  </svg>
+                </div>
               </button>
             ) : (
-              <button onClick={handleSubmit} className="btn-cta">
-                KONFIGURATION SENDEN
+              <button onClick={handleSubmit} className="btn group overflow-visible">
+                <span className="relative z-[3]">KONFIGURATION SENDEN</span>
+                <div className="btn-icon-circle">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="m9 18 6-6-6-6"/>
+                  </svg>
+                </div>
               </button>
             )}
           </div>
