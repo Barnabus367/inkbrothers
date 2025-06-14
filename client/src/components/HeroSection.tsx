@@ -57,7 +57,6 @@ export default function HeroSection() {
           ))}
         </div>
       </div>
-      
       {/* Dynamic Smoke Overlay */}
       <div className="absolute inset-0 z-10">
         <img 
@@ -69,7 +68,6 @@ export default function HeroSection() {
           }}
         />
       </div>
-      
       {/* Interactive Light Beam */}
       <div 
         className="absolute inset-0 z-20 pointer-events-none"
@@ -77,7 +75,6 @@ export default function HeroSection() {
           background: `radial-gradient(circle at ${mousePosition.x * 100}% ${mousePosition.y * 100}%, rgba(166, 40, 46, 0.3) 0%, transparent 30%)`
         }}
       />
-      
       {/* Floating Particles */}
       <div className="absolute inset-0 z-25">
         {Array.from({ length: 20 }).map((_, i) => (
@@ -93,7 +90,6 @@ export default function HeroSection() {
           />
         ))}
       </div>
-      
       {/* Main Hero Content */}
       <div className={`relative z-30 text-center px-4 max-w-5xl mx-auto transition-all duration-2000 ${
         isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
@@ -126,9 +122,7 @@ export default function HeroSection() {
         
         {/* Subtitle with Typewriter Effect */}
         <div className="mb-12 overflow-hidden">
-          <p className="text-xl md:text-2xl lg:text-3xl text-gray-300 max-w-3xl mx-auto leading-relaxed font-light animate-typewriter">
-            Kein Hype. Keine Poser. Nur echte Kunst auf echter Haut.
-          </p>
+          <p className="text-xl md:text-2xl lg:text-3xl text-gray-300 max-w-3xl mx-auto leading-relaxed font-light animate-typewriter">Wir stechen Geschichten, keine Trends.</p>
         </div>
         
         {/* Interactive CTA Button */}
