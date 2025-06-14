@@ -2,7 +2,7 @@ import { Twitter, Instagram, Facebook } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="relative ink-anthracite py-12 px-4 grunge-texture border-t border-gray-800">
+    <footer className="relative ink-anthracite py-12 px-4 grunge-texture border-t border-gray-800 section-flow z-20 -mt-8">
       {/* Zurich Skyline */}
       <div className="absolute top-0 left-0 w-full h-32 overflow-hidden pointer-events-none">
         <svg 
