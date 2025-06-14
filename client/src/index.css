@@ -1,8 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap');
 
 :root {
   --background: hsl(0, 0%, 6.7%);
@@ -155,6 +155,10 @@
   animation: smoke-drift 18s linear infinite;
 }
 
+.opacity-17 {
+  opacity: 0.17;
+}
+
 .animate-glow-pulse {
   animation: glow-pulse 3s ease-in-out infinite;
 }
@@ -223,7 +227,7 @@
 
 /* Portfolio hover effects */
 .portfolio-item {
-  @apply group relative overflow-hidden rounded-lg shadow-2xl cursor-pointer;
+  @apply relative overflow-hidden rounded-lg shadow-2xl cursor-pointer;
 }
 
 .portfolio-item img {
@@ -235,7 +239,11 @@
 }
 
 .portfolio-overlay {
-  @apply absolute inset-0 bg-black bg-opacity-70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center;
+  @apply absolute inset-0 bg-black bg-opacity-70 opacity-0 transition-opacity duration-300 flex items-center justify-center;
+}
+
+.portfolio-item:hover .portfolio-overlay {
+  opacity: 1;
 }
 
 /* Configurator styles */

@@ -1,3 +1,5 @@
+import smokeTexture from "@assets/smoke-texture-wallpaper-dark-background_1749913309315_1749914968513.jpg";
+
 export default function HeroSection() {
   return (
     <section className="relative h-screen flex items-center justify-center overflow-hidden">
@@ -11,8 +13,12 @@ export default function HeroSection() {
       </div>
       
       {/* Smoke Overlay */}
-      <div className="absolute inset-0 z-10 opacity-20">
-        <div className="w-[120%] h-full bg-gradient-to-r from-transparent via-gray-400/30 to-transparent animate-smoke-drift"></div>
+      <div className="absolute inset-0 z-10 opacity-17">
+        <img 
+          src={smokeTexture}
+          alt=""
+          className="w-[120%] h-full object-cover animate-smoke-drift"
+        />
       </div>
       
       {/* Red Glow Overlay */}
