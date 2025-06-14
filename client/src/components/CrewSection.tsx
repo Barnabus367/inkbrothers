@@ -253,7 +253,7 @@ export default function CrewSection() {
         {/* Call to Action */}
         <div className="text-center mt-20 scroll-animate">
           <p className="text-gray-400 mb-8 text-lg">
-            Bereit, mit einem unserer Künstler zu arbeiten?
+            Bereit, mit David zu arbeiten?
           </p>
           <button className="group relative bg-gradient-to-r from-red-600 to-red-700 text-white px-10 py-4 font-bebas text-xl tracking-wider transition-all duration-300 transform hover:scale-105 hover:rotate-1 overflow-hidden">
             <span className="relative z-10 flex items-center gap-3">
