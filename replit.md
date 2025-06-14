@@ -131,6 +131,7 @@ Changelog:
 - June 14, 2025. Debugged and enhanced experimental lab: removed Sonic component, improved KI Vision with camera integration, advanced Pain Simulator with personalization, sophisticated Neural Designer with comprehensive design generation
 - June 14, 2025. Enhanced website with three major improvements: brightened hero image with white overlay, upgraded tattoo configurator with visual previews and studio-style language, added Zurich skyline to footer
 - June 14, 2025. Replaced static smoke background with dynamic MP4 video loop in hero section for enhanced visual impact
+- June 14, 2025. Implemented new hero background video (4343481-hd_1920_1080_24fps) with complete removal of smoke effects, positioned at z-index 0 with full-screen coverage and proper text layering
 ```
 
 ## User Preferences

@@ -31,73 +31,33 @@ export default function HeroSection() {
     <section
       ref={heroRef}
       className="relative h-screen flex items-center justify-center overflow-hidden cursor-crosshair"
-      style={{
-        background: `radial-gradient(circle at ${mousePosition.x * 100}% ${mousePosition.y * 100}%, rgba(166, 40, 46, 0.15) 0%, transparent 50%)`,
-      }}
     >
-      {/* Background Image */}
-      <div className="absolute inset-0 z-0">
-        <img
-          src={heroBackground}
-          alt="InkBrothers Studio Zürich - Authentic Tattoo Art"
-          className="w-full h-full object-cover brightness-30 blur-sm scale-110"
-        />
-        <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-black/50 to-black/70"></div>
-        <div className="absolute inset-0 opacity-20">
-          {Array.from({ length: 50 }).map((_, i) => (
-            <div
-              key={i}
-              className="absolute w-px h-full bg-gradient-to-b from-transparent via-red-500/20 to-transparent animate-pulse"
-              style={{
-                left: `${i * 2}%`,
-                animationDelay: `${i * 0.1}s`,
-                animationDuration: `${2 + (i % 3)}s`,
-              }}
-            />
-          ))}
-        </div>
-      </div>
-      {/* Dynamic Smoke Video Overlay */}
-      <div className="absolute inset-0 z-10 pointer-events-none">
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="w-full h-full object-cover opacity-30 mix-blend-screen"
-        >
-          <source src="/smoke-video.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-      </div>
+      {/* Background Video */}
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="absolute top-0 left-0 w-full h-full object-cover z-0 pointer-events-none"
+      >
+        <source src="/video/hero.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+
+      {/* Optional dark overlay for better text contrast */}
+      <div className="absolute inset-0 bg-black/30 z-1 pointer-events-none"></div>
+
       {/* Interactive Light Beam */}
       <div
-        className="absolute inset-0 z-20 pointer-events-none"
+        className="absolute inset-0 z-1 pointer-events-none"
         style={{
           background: `radial-gradient(circle at ${mousePosition.x * 100}% ${mousePosition.y * 100}%, rgba(166, 40, 46, 0.3) 0%, transparent 30%)`,
         }}
       />
-      {/* Floating Particles */}
-      <div className="absolute inset-0 z-25">
-        {Array.from({ length: 20 }).map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-1 h-1 bg-red-500/50 rounded-full animate-float"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${i * 0.3}s`,
-              animationDuration: `${4 + Math.random() * 4}s`,
-            }}
-          />
-        ))}
-      </div>
-      {/* White Overlay for Brightening */}
-      <div className="absolute inset-0 z-1 bg-white/5 pointer-events-none"></div>
       
       {/* Main Hero Content */}
       <div
-        className={`relative z-30 text-center px-4 max-w-5xl mx-auto transition-all duration-2000 ${
+        className={`hero-inner relative z-2 text-center px-4 max-w-5xl mx-auto transition-all duration-2000 ${
           isLoaded ? "translate-y-0 opacity-100" : "translate-y-20 opacity-0"
         }`}
       >
