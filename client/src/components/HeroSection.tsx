@@ -84,6 +84,9 @@ export default function HeroSection() {
 
         
       </div>
+      
+      {/* Gradient fade overlay for smooth transition */}
+      <div className="section-fade-bottom pointer-events-none absolute bottom-0 left-0 w-full h-32 z-10"></div>
     </section>
   );
 }

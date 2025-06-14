@@ -1,0 +1,72 @@
+Ziel: Ersetze alle harten, blockartigen Schnitte zwischen den Sektionen durch eine fließende, professionelle Übergangslogik.
+
+Anforderungen an alle Übergänge:
+Keine sichtbaren Linien
+
+Keine zerrissenen SVGs oder Texturen
+
+Übergänge sollen visuell weich und natürlich wirken, wie eine durchgehende Storyline
+
+🔧 1. Gradient-Overlay am Ende jeder Sektion (nach unten)
+Füge am unteren Rand jeder Hauptsektion ein halbtransparentes <div>-Overlay ein, das in die nächste Sektion übergeht.
+
+html
+Kopieren
+Bearbeiten
+<div class="section-fade-bottom pointer-events-none absolute bottom-0 left-0 w-full h-32 z-10"></div>
+css
+Kopieren
+Bearbeiten
+.section-fade-bottom {
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, #0f0f0f 100%);
+}
+Das Element liegt über der aktuellen Section, aber unter dem Inhalt der nächsten
+
+Wiederhole dieses Overlay für jede Section, die visuell getrennt wird
+
+🪶 2. Sanfter Layer-Shift mit negativem Margin
+Lasse die nächste Sektion leicht über die vorige rutschen, z. B. margin-top: -2rem
+
+html
+Kopieren
+Bearbeiten
+<section class="relative z-20 mt-[-2rem]">
+Dadurch entsteht eine visuelle Verzahnung, ohne dass eine sichtbare Trennung notwendig ist
+
+Funktioniert besonders gut mit gleichfarbigem oder sehr ähnlichem Background
+
+🎥 3. Fade-In & Bewegung bei Scroll (optional)
+Für zusätzliche Tiefe kannst du beim Scrollen einen soften Fade-in + TranslateY einbauen:
+
+html
+Kopieren
+Bearbeiten
+<section class="opacity-0 translate-y-8 transition-all duration-700 ease-out will-change-transform animate-fadein">
+css
+Kopieren
+Bearbeiten
+@keyframes fadein {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+So wirkt es, als fließe die nächste Section beim Scrollen natürlich ins Bild
+
+🧼 4. Hintergrundverläufe oder -überlagerungen (subtil!)
+Du kannst zusätzlich pro Section background: linear-gradient einsetzen, z. B. oben leicht heller, unten dunkler:
+
+css
+Kopieren
+Bearbeiten
+.section {
+  background: linear-gradient(to bottom, #111111 0%, #0f0f0f 100%);
+}
+Das erzeugt eine Lichtlogik, wie bei einem echten Studiolicht
+
+Die Übergänge wirken analog, obwohl sie technisch perfekt sind
+
