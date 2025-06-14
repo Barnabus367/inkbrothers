@@ -1,4 +1,5 @@
-import { Instagram } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
+import { Instagram, ExternalLink, Eye } from "lucide-react";
 
 const portfolioItems = [
   {
@@ -6,6 +7,8 @@ const portfolioItems = [
     image: "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=600",
     title: "Black & Grey Sleeve",
     year: "2024",
+    artist: "David Siete Gatos",
+    category: "Realism",
     alt: "Black and grey sleeve tattoo with intricate linework"
   },
   {
@@ -13,6 +16,8 @@ const portfolioItems = [
     image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=600",
     title: "Neo Traditional",
     year: "2024",
+    artist: "Roberto",
+    category: "Color",
     alt: "Neo traditional colorful tattoo with bold lines"
   },
   {
@@ -20,6 +25,8 @@ const portfolioItems = [
     image: "https://images.unsplash.com/photo-1517677208171-0bc6725a3e60?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=600",
     title: "Geometric Fineline",
     year: "2024",
+    artist: "Apo",
+    category: "Geometric",
     alt: "Geometric fine line tattoo with precise patterns"
   },
   {
@@ -27,6 +34,8 @@ const portfolioItems = [
     image: "https://images.unsplash.com/photo-1541961017774-22349e4a1262?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=600",
     title: "Realism Portrait",
     year: "2024",
+    artist: "David Siete Gatos",
+    category: "Realism",
     alt: "Realistic portrait tattoo showing incredible detail"
   },
   {
@@ -34,6 +43,8 @@ const portfolioItems = [
     image: "https://images.unsplash.com/photo-1590736969955-71cc94901144?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=600",
     title: "Japanese Traditional",
     year: "2024",
+    artist: "XXX",
+    category: "Traditional",
     alt: "Traditional Japanese tattoo with bold colors"
   },
   {
@@ -41,61 +52,190 @@ const portfolioItems = [
     image: "https://images.unsplash.com/photo-1588015540598-c2ad0ce4e00c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=600",
     title: "Minimalist Fineline",
     year: "2024",
+    artist: "Apo",
+    category: "Fineline",
     alt: "Minimalist single needle tattoo with clean lines"
-  },
-  {
-    id: 7,
-    image: "https://images.unsplash.com/photo-1590736965093-b4a93a7c7188?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=600",
-    title: "Watercolor Abstract",
-    year: "2024",
-    alt: "Abstract watercolor style tattoo with flowing colors"
-  },
-  {
-    id: 8,
-    image: "https://images.unsplash.com/photo-1590736962111-3954ed4c7e72?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=600",
-    title: "American Traditional",
-    year: "2024",
-    alt: "Traditional American tattoo with bold outlines"
   }
 ];
 
 export default function PortfolioSection() {
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [activeItem, setActiveItem] = useState<number | null>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (sectionRef.current) {
+        const rect = sectionRef.current.getBoundingClientRect();
+        setMousePosition({
+          x: (e.clientX - rect.left) / rect.width,
+          y: (e.clientY - rect.top) / rect.height,
+        });
+      }
+    };
+
+    const sectionElement = sectionRef.current;
+    if (sectionElement) {
+      sectionElement.addEventListener('mousemove', handleMouseMove);
+      return () => sectionElement.removeEventListener('mousemove', handleMouseMove);
+    }
+  }, []);
+
   return (
-    <section id="work" className="py-20 px-4 ink-anthracite grunge-texture">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16 scroll-animate">
-          <h2 className="font-bebas text-5xl md:text-6xl mb-4 text-ink-white section-title">
-            UNSERE ARBEIT
-          </h2>
-          <p className="text-xl text-gray-400">
+    <section 
+      id="work" 
+      ref={sectionRef}
+      className="relative py-20 px-4 ink-anthracite overflow-hidden"
+      style={{
+        background: `radial-gradient(circle at ${mousePosition.x * 100}% ${mousePosition.y * 100}%, rgba(166, 40, 46, 0.05) 0%, transparent 50%)`
+      }}
+    >
+      {/* Dynamic Background Grid */}
+      <div className="absolute inset-0 opacity-10">
+        {Array.from({ length: 30 }).map((_, i) => (
+          <div
+            key={i}
+            className="absolute w-px h-full bg-gradient-to-b from-transparent via-red-500/30 to-transparent"
+            style={{
+              left: `${(i * 3.33)}%`,
+              transform: `translateY(${Math.sin((mousePosition.x + i * 0.1) * Math.PI * 2) * 20}px)`,
+              transition: 'all 0.3s ease-out'
+            }}
+          />
+        ))}
+      </div>
+
+      <div className="max-w-7xl mx-auto relative z-10">
+        {/* Animated Title Section */}
+        <div className="text-center mb-20 scroll-animate">
+          <div className="relative inline-block">
+            <h2 className="font-bebas text-6xl md:text-8xl mb-6 text-ink-white section-title relative z-10">
+              <span className="inline-block animate-reveal-text" style={{ animationDelay: '0.2s' }}>
+                UNSERE
+              </span>
+              <br/>
+              <span className="inline-block text-red-500 animate-reveal-text animate-neon-flicker" style={{ animationDelay: '0.4s' }}>
+                ARBEIT
+              </span>
+            </h2>
+            
+            {/* Decorative elements */}
+            <div className="absolute -top-8 -left-8 w-16 h-16 border-l-2 border-t-2 border-red-500/50 animate-pulse"></div>
+            <div className="absolute -bottom-8 -right-8 w-16 h-16 border-r-2 border-b-2 border-red-500/50 animate-pulse"></div>
+          </div>
+          
+          <p className="text-xl md:text-2xl text-gray-400 animate-typewriter max-w-3xl mx-auto">
             Authentische Tattoo-Kunst, die Geschichten erzählt
           </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        {/* Interactive Portfolio Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {portfolioItems.map((item, index) => (
             <div 
               key={item.id} 
-              className={`portfolio-item scroll-animate`}
-              style={{ animationDelay: `${index * 0.1}s` }}
+              className="portfolio-item-advanced group relative scroll-animate"
+              style={{ animationDelay: `${index * 0.15}s` }}
+              onMouseEnter={() => setActiveItem(item.id)}
+              onMouseLeave={() => setActiveItem(null)}
             >
-              <img 
-                src={item.image}
-                alt={item.alt}
-                className="w-full h-80 object-cover"
-              />
-              <div className="portfolio-overlay">
-                <div className="text-center text-white">
-                  <p className="font-semibold mb-2">{item.title}</p>
-                  <p className="text-sm mb-4">{item.year}</p>
-                  <button className="bg-red-600 px-4 py-2 rounded text-sm font-semibold hover:bg-red-700 transition-colors flex items-center gap-2 mx-auto">
-                    <Instagram className="w-4 h-4" />
-                    Auf Instagram ansehen
-                  </button>
+              {/* Main Image Container */}
+              <div className="relative overflow-hidden rounded-lg aspect-[3/4] bg-black">
+                <img 
+                  src={item.image}
+                  alt={item.alt}
+                  className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:rotate-1"
+                  style={{
+                    filter: activeItem === item.id ? 'brightness(1.1) contrast(1.2)' : 'brightness(0.8)'
+                  }}
+                />
+                
+                {/* Hover Overlay with Advanced Effects */}
+                <div className={`absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent transition-all duration-500 ${
+                  activeItem === item.id ? 'opacity-100' : 'opacity-0'
+                }`}>
+                  {/* Animated Border Frame */}
+                  <div className="absolute inset-2 border border-red-500/50 rounded opacity-0 group-hover:opacity-100 transition-all duration-300">
+                    <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-red-500 animate-pulse"></div>
+                    <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-red-500 animate-pulse"></div>
+                    <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-red-500 animate-pulse"></div>
+                    <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-red-500 animate-pulse"></div>
+                  </div>
+                  
+                  {/* Content */}
+                  <div className="absolute bottom-0 left-0 right-0 p-6 text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                    <div className="mb-4">
+                      <h3 className="font-bebas text-2xl mb-1 text-red-500 animate-glitch-1">
+                        {item.title}
+                      </h3>
+                      <p className="text-sm text-gray-300 mb-1">
+                        by <span className="text-red-400 font-semibold">{item.artist}</span>
+                      </p>
+                      <div className="flex items-center gap-2 text-xs text-gray-400">
+                        <span className="px-2 py-1 bg-red-600/20 rounded border border-red-500/30">
+                          {item.category}
+                        </span>
+                        <span>{item.year}</span>
+                      </div>
+                    </div>
+                    
+                    {/* Action Buttons */}
+                    <div className="flex gap-2">
+                      <button className="flex items-center gap-2 bg-red-600 hover:bg-red-700 px-4 py-2 rounded text-sm font-semibold transition-all duration-300 transform hover:scale-105 hover:rotate-1">
+                        <Instagram className="w-4 h-4" />
+                        Instagram
+                      </button>
+                      <button className="flex items-center gap-2 bg-gray-800/80 hover:bg-gray-700/80 px-4 py-2 rounded text-sm font-semibold transition-all duration-300 transform hover:scale-105">
+                        <Eye className="w-4 h-4" />
+                        Details
+                      </button>
+                    </div>
+                  </div>
                 </div>
+                
+                {/* Magnetic Cursor Effect */}
+                <div 
+                  className={`absolute w-2 h-2 bg-red-500 rounded-full pointer-events-none transition-all duration-200 ${
+                    activeItem === item.id ? 'opacity-100 scale-100' : 'opacity-0 scale-0'
+                  }`}
+                  style={{
+                    left: `${mousePosition.x * 100}%`,
+                    top: `${mousePosition.y * 100}%`,
+                    transform: 'translate(-50%, -50%)',
+                    boxShadow: '0 0 20px rgba(166, 40, 46, 0.8)'
+                  }}
+                />
               </div>
+              
+              {/* Interactive Number Badge */}
+              <div className="absolute -top-4 -left-4 w-12 h-12 bg-red-600 rounded-full flex items-center justify-center font-bebas text-xl text-white transform rotate-12 group-hover:rotate-0 group-hover:scale-110 transition-all duration-300 shadow-lg">
+                {String(index + 1).padStart(2, '0')}
+              </div>
+              
+              {/* Glitch Effect Overlay */}
+              <div className={`absolute inset-0 bg-red-500/10 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none ${
+                activeItem === item.id ? 'animate-glitch-2' : ''
+              }`} />
             </div>
           ))}
+        </div>
+        
+        {/* Call to Action */}
+        <div className="text-center mt-16 scroll-animate">
+          <p className="text-gray-400 mb-6 text-lg">
+            Mehr von unserer Arbeit siehst du auf Instagram
+          </p>
+          <button className="group relative bg-gradient-to-r from-red-600 to-red-700 text-white px-8 py-4 font-bebas text-xl tracking-wider transition-all duration-300 transform hover:scale-105 hover:rotate-1 overflow-hidden">
+            <span className="relative z-10 flex items-center gap-3">
+              <Instagram className="w-6 h-6" />
+              @INKBROTHERS_ZURICH
+              <ExternalLink className="w-5 h-5" />
+            </span>
+            
+            {/* Button effects */}
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
+            <div className="absolute inset-0 border-2 border-red-400 opacity-0 group-hover:opacity-100 animate-pulse" />
+          </button>
         </div>
       </div>
     </section>
