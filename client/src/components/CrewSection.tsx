@@ -273,16 +273,14 @@ export default function CrewSection() {
           <p className="text-gray-400 mb-8 text-lg">
             Bereit, mit David zu arbeiten?
           </p>
-          <button className="group relative bg-gradient-to-r from-red-600 to-red-700 text-white px-10 py-4 font-bebas text-xl tracking-wider transition-all duration-300 transform hover:scale-105 hover:rotate-1 overflow-hidden">
-            <span className="relative z-10 flex items-center gap-3">
-              <MessageCircle className="w-6 h-6" />
-              TERMIN VEREINBAREN
+          <a href="#kontakt" className="btn">
+            TERMIN VEREINBAREN
+            <span className="btn-arrow-circle">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <path d="M5 12h14m-7-7 7 7-7 7"/>
+              </svg>
             </span>
-
-            {/* Button animations */}
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
-            <div className="absolute inset-0 border-2 border-red-400 opacity-0 group-hover:opacity-100 animate-pulse" />
-          </button>
+          </a>
         </div>
       </div>
     </section>

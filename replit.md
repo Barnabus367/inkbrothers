@@ -135,6 +135,7 @@ Changelog:
 - June 14, 2025. Implemented transparent pill-shaped buttons with white outline: rounded-full border, transparent background, hover fills with white background and black text, includes animated arrow circle that scales on hover
 - June 14, 2025. Reduced button sizes for better proportions: 48px height, px-4 padding, text-sm font size, 28px arrow circles with gap-2 spacing, stroke-width 1.5 for refined appearance
 - June 14, 2025. Removed main headline "ZUGANG NUR FÜR ECHTE" and scroll indicator from hero section, simplified to show only video background, subtitle, and CTA button
+- June 14, 2025. Updated CrewSection CTA button to match site-wide pill-shaped button style with consistent hover animations
 ```
 
 ## User Preferences
