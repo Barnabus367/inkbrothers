@@ -1,5 +1,9 @@
 import { useState, useRef, useEffect } from "react";
 import { Instagram, MessageCircle, Star } from "lucide-react";
+import davidWork from "@assets/image_1749869004142.png";
+import robertoWork from "@assets/image_1749869009808.png";
+import apoWork from "@assets/image_1749869016181.png";
+import xxxWork from "@assets/image_1749869022370.png";
 
 const crewMembers = [
   {
@@ -10,8 +14,8 @@ const crewMembers = [
     quote: "Jedes Tattoo erzählt eine Geschichte...",
     specialties: ["Neo Traditional", "Color Work", "Portraits"],
     instagram: "@davidsiete",
-    image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=500",
-    alt: "David Siete Gatos - Professional tattoo artist portrait"
+    image: davidWork,
+    alt: "David Siete Gatos horror clown tattoo artwork - InkBrothers Studio Zürich"
   },
   {
     id: 2,
@@ -21,8 +25,8 @@ const crewMembers = [
     quote: "Wir sorgen dafür, dass alles läuft.",
     specialties: ["Management", "Traditional", "Blackwork"],
     instagram: "@roberto_ink",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=500",
-    alt: "Roberto - Studio co-owner portrait"
+    image: robertoWork,
+    alt: "Roberto Egyptian mythology backpiece tattoo artwork - InkBrothers Studio"
   },
   {
     id: 3,
@@ -32,8 +36,8 @@ const crewMembers = [
     quote: "Das Studio ist unser Zuhause.",
     specialties: ["Geometric", "Fineline", "Minimalist"],
     instagram: "@apo_tattoo",
-    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=500",
-    alt: "Apo - Studio co-owner portrait"
+    image: apoWork,
+    alt: "Apo surreal portrait tattoo artwork - InkBrothers Zürich"
   },
   {
     id: 4,
@@ -43,8 +47,8 @@ const crewMembers = [
     quote: "Tattoo ist mehr als nur Kunst – es ist Leidenschaft.",
     specialties: ["Japanese", "Realism", "Watercolor"],
     instagram: "@xxx_artist",
-    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=500",
-    alt: "XXX - Studio co-owner portrait"
+    image: xxxWork,
+    alt: "XXX dark portrait realism tattoo artwork - InkBrothers Studio Zürich"
   }
 ];
 

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import smokeTexture from "@assets/smoke-texture-wallpaper-dark-background_1749913309315_1749914968513.jpg";
+import heroBackground from "@assets/image_1749869009808.png";
 
 export default function HeroSection() {
   const heroRef = useRef<HTMLElement>(null);
@@ -34,9 +35,14 @@ export default function HeroSection() {
         background: `radial-gradient(circle at ${mousePosition.x * 100}% ${mousePosition.y * 100}%, rgba(166, 40, 46, 0.15) 0%, transparent 50%)`
       }}
     >
-      {/* Animated Background Grid */}
+      {/* Background Image */}
       <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black"></div>
+        <img 
+          src={heroBackground}
+          alt="InkBrothers Studio Zürich - Authentic Tattoo Art"
+          className="w-full h-full object-cover brightness-30 blur-sm scale-110"
+        />
+        <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-black/50 to-black/70"></div>
         <div className="absolute inset-0 opacity-20">
           {Array.from({ length: 50 }).map((_, i) => (
             <div

@@ -1,60 +1,67 @@
 import { useState, useRef, useEffect } from "react";
 import { Instagram, ExternalLink, Eye } from "lucide-react";
 
+import clownTattoo from "@assets/image_1749869004142.png";
+import backPiece from "@assets/image_1749869009808.png";
+import portraitTattoo from "@assets/image_1749869016181.png";
+import skullTattoo from "@assets/image_1749869022370.png";
+import musicSleeve from "@assets/image_1749869028566.png";
+import duplicateClown from "@assets/01b418e4-1ff8-47df-9237-b4b132956efa.png";
+
 const portfolioItems = [
   {
     id: 1,
-    image: "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=600",
-    title: "Black & Grey Sleeve",
+    image: clownTattoo,
+    title: "Horror Clown Portrait",
     year: "2024",
     artist: "David Siete Gatos",
     category: "Realism",
-    alt: "Black and grey sleeve tattoo with intricate linework"
+    alt: "Detailed horror clown tattoo with red nose on forearm - InkBrothers Studio Zürich"
   },
   {
     id: 2,
-    image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=600",
-    title: "Neo Traditional",
+    image: backPiece,
+    title: "Egyptian Mythology Backpiece",
     year: "2024",
     artist: "Roberto",
-    category: "Color",
-    alt: "Neo traditional colorful tattoo with bold lines"
+    category: "Realism",
+    alt: "Full back tattoo featuring Egyptian pharaoh and mythology - InkBrothers Studio"
   },
   {
     id: 3,
-    image: "https://images.unsplash.com/photo-1517677208171-0bc6725a3e60?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=600",
-    title: "Geometric Fineline",
+    image: portraitTattoo,
+    title: "Surreal Portrait",
     year: "2024",
     artist: "Apo",
-    category: "Geometric",
-    alt: "Geometric fine line tattoo with precise patterns"
+    category: "Surrealism",
+    alt: "Artistic portrait tattoo with dripping paint effects - InkBrothers Zürich"
   },
   {
     id: 4,
-    image: "https://images.unsplash.com/photo-1541961017774-22349e4a1262?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=600",
-    title: "Realism Portrait",
+    image: skullTattoo,
+    title: "Dark Portrait Realism",
     year: "2024",
     artist: "David Siete Gatos",
     category: "Realism",
-    alt: "Realistic portrait tattoo showing incredible detail"
+    alt: "Dark realistic portrait tattoo with intricate shading - InkBrothers Studio"
   },
   {
     id: 5,
-    image: "https://images.unsplash.com/photo-1590736969955-71cc94901144?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=600",
-    title: "Japanese Traditional",
+    image: musicSleeve,
+    title: "Music Themed Sleeve",
     year: "2024",
     artist: "XXX",
-    category: "Traditional",
-    alt: "Traditional Japanese tattoo with bold colors"
+    category: "Realism",
+    alt: "Full sleeve tattoo with music and portrait elements - InkBrothers Zürich"
   },
   {
     id: 6,
-    image: "https://images.unsplash.com/photo-1588015540598-c2ad0ce4e00c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=600",
-    title: "Minimalist Fineline",
+    image: duplicateClown,
+    title: "Horror Character Art",
     year: "2024",
-    artist: "Apo",
-    category: "Fineline",
-    alt: "Minimalist single needle tattoo with clean lines"
+    artist: "Roberto",
+    category: "Horror",
+    alt: "Detailed horror character tattoo showcase - InkBrothers Studio Zürich"
   }
 ];
 
