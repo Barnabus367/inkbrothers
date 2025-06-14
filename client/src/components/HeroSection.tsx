@@ -58,24 +58,16 @@ export default function HeroSection() {
         </div>
       </div>
       {/* Dynamic Smoke Video Overlay */}
-      <div className="absolute inset-0 z-10">
+      <div className="absolute inset-0 z-10 pointer-events-none">
         <video
           autoPlay
           loop
           muted
           playsInline
-          className="w-full h-full object-cover opacity-30 mix-blend-screen pointer-events-none"
-          style={{
-            position: "absolute",
-            inset: 0,
-            zIndex: 0,
-            pointerEvents: "none",
-            objectFit: "cover",
-            width: "100%",
-            height: "100%"
-          }}
+          className="w-full h-full object-cover opacity-30 mix-blend-screen"
         >
           <source src="/smoke-video.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
         </video>
       </div>
       {/* Interactive Light Beam */}
