@@ -93,7 +93,7 @@ export default function PortfolioSection() {
     <section
       id="work"
       ref={sectionRef}
-      className="relative py-20 px-4 ink-anthracite overflow-hidden"
+      className="section-tear relative py-20 px-4 ink-anthracite overflow-hidden"
       style={{
         background: `radial-gradient(circle at ${mousePosition.x * 100}% ${mousePosition.y * 100}%, rgba(166, 40, 46, 0.05) 0%, transparent 50%)`,
       }}

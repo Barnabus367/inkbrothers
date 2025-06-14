@@ -92,7 +92,7 @@ export default function ConfiguratorSection() {
   return (
     <section
       id="konfigurator"
-      className="py-20 px-4 ink-anthracite grunge-texture"
+      className="section-tear py-20 px-4 ink-anthracite grunge-texture"
     >
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-16 scroll-animate">
