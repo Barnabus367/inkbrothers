@@ -129,6 +129,8 @@ Changelog:
 - June 14, 2025. Added revolutionary experimental features (AI Vision, Neural Pattern Matching, Quantum Design, etc.)
 - June 14, 2025. Updated crew section to feature David Coello Misa as single master tattoo artist, removed Neural Interface Studio
 - June 14, 2025. Debugged and enhanced experimental lab: removed Sonic component, improved KI Vision with camera integration, advanced Pain Simulator with personalization, sophisticated Neural Designer with comprehensive design generation
+- June 14, 2025. Enhanced website with three major improvements: brightened hero image with white overlay, upgraded tattoo configurator with visual previews and studio-style language, added Zurich skyline to footer
+- June 14, 2025. Replaced static smoke background with dynamic MP4 video loop in hero section for enhanced visual impact
 ```
 
 ## User Preferences
