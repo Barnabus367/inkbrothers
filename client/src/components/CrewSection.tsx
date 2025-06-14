@@ -140,7 +140,9 @@ export default function CrewSection() {
                 onMouseLeave={() => setHoveredMember(null)}
               >
                 {/* 3D Card Container */}
-                <div className="relative h-full bg-gradient-to-br from-gray-900 to-black rounded-xl overflow-hidden border border-gray-800 transition-all duration-500 group-hover:border-red-500/50">
+                <div className="relative h-full bg-gradient-to-br from-gray-900 to-black rounded-xl overflow-hidden border border-gray-800 transition-all duration-300 ease-out group-hover:border-red-500/50 group-hover:translate-y-[-4px] group-hover:scale-[1.02] group-hover:shadow-[0_0_16px_rgba(255,0,0,0.4)]">
+                  {/* Enhanced background glow on hover */}
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-40 transition-opacity duration-300 ease-out" style={{ background: 'radial-gradient(circle, rgba(255,0,0,0.2) 0%, transparent 70%)' }}></div>
                   {/* Holographic Background */}
                   <div
                     className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-500"

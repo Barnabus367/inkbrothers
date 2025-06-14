@@ -154,7 +154,7 @@ export default function PortfolioSection() {
               onMouseLeave={() => setActiveItem(null)}
             >
               {/* Main Image Container */}
-              <div className="relative overflow-hidden rounded-lg aspect-[3/4] bg-black">
+              <div className="relative overflow-hidden rounded-lg aspect-[3/4] bg-black transition-all duration-300 ease-out hover:scale-[1.03] hover:shadow-[0_0_12px_rgba(255,0,0,0.3)]">
                 <img
                   src={item.image}
                   alt={item.alt}
@@ -166,6 +166,9 @@ export default function PortfolioSection() {
                         : "brightness(0.8)",
                   }}
                 />
+                
+                {/* Red glow background on hover */}
+                <div className="absolute inset-0 bg-red-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
 
                 {/* Hover Overlay with Advanced Effects */}
                 <div

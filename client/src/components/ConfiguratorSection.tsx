@@ -137,8 +137,8 @@ export default function ConfiguratorSection() {
                     <div
                       key={style.id}
                       onClick={() => handleStyleSelect(style.id)}
-                      className={`configurator-step ${
-                        selectedStyle === style.id ? "active" : ""
+                      className={`configurator-step cursor-pointer border border-transparent transition-all duration-300 ease-out hover:border-red-600 hover:bg-white/[0.02] hover:scale-[1.01] ${
+                        selectedStyle === style.id ? "active border-red-600 bg-white/[0.02]" : ""
                       }`}
                     >
                       <div className="text-center">
@@ -205,10 +205,10 @@ export default function ConfiguratorSection() {
                         key={part.id}
                         type="button"
                         onClick={() => handleBodyPartChange({ target: { value: part.id } } as any)}
-                        className={`p-4 rounded-lg border-2 transition-all duration-300 text-left ${
+                        className={`p-4 rounded-lg border-2 transition-all duration-300 ease-out text-left hover:scale-[1.01] hover:bg-white/[0.02] ${
                           selectedBodyPart === part.id
-                            ? 'border-red-500 bg-red-500/20 text-white'
-                            : 'border-gray-600 hover:border-red-500/50 text-gray-400 hover:text-white'
+                            ? 'border-red-600 bg-red-600/20 text-white'
+                            : 'border-transparent hover:border-red-600 text-gray-400 hover:text-white'
                         }`}
                       >
                         <div className="text-2xl mb-2">{part.icon}</div>
@@ -250,10 +250,10 @@ export default function ConfiguratorSection() {
                         key={size.id}
                         type="button"
                         onClick={() => setFormData(prev => ({ ...prev, size: size.id }))}
-                        className={`p-4 rounded-lg border-2 transition-all duration-300 text-left ${
+                        className={`p-4 rounded-lg border-2 transition-all duration-300 ease-out text-left hover:scale-[1.01] hover:bg-white/[0.02] ${
                           formData.size === size.id
-                            ? 'border-red-500 bg-red-500/20 text-white'
-                            : 'border-gray-600 hover:border-red-500/50 text-gray-400 hover:text-white'
+                            ? 'border-red-600 bg-red-600/20 text-white'
+                            : 'border-transparent hover:border-red-600 text-gray-400 hover:text-white'
                         }`}
                       >
                         <div className="font-bold text-white">{size.name}</div>
