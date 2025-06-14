@@ -1,0 +1,189 @@
+1. Ziel & Style
+Ziel:
+Eine kompromisslos moderne, edgy, dunkle Tattoo-Studio-Website mit Street-/Urban-Flair, inspiriert von Top-Studios weltweit (siehe Beispiele unten).
+
+Zielgruppe: Junge, trendbewusste Menschen, die Wert auf Ästhetik und Authentizität legen.
+
+Die Seite soll sofort Vertrauen und Respekt ausstrahlen und das Feeling eines echten, roughen Studios vermitteln.
+
+Stil-Referenzen:
+
+Bang Bang NYC (Modern, Cinematic, viel Schwarz, animierte Hero-Bilder)
+
+First Class Tattoo (Urban, starke Typografie, Crew als Gallery)
+
+Ink Rebels Berlin (Edge, rauer Look, Schwarz/Weiß-Kontrast)
+
+Animationen: Subtile Rauch-Effekte (siehe tympanus.net InkTransition), Parallax/Glow-Layer, Mouseover-Zoom auf Portfolio.
+
+2. Struktur & Inhalte
+2.1. Navigation
+Oben sticky, mit Logo links, Links zu: WORK, ARTISTS, KONFIGURATOR, CONNECT, und CTA-Button „TERMIN BUCHEN“ (rot, Glow auf Hover).
+
+Unterhalb der Navigation ein „Brushstroke“-SVG als animierter Tintenstrich, der beim Scrollen sichtbar wird.
+
+2.2. Hero-Bereich
+Vollflächiges, kontrastreiches, echtes Tattoo-Motiv als Hintergrund.
+
+Rauch-/Smoke-Overlay: PNG oder SVG, dezent animiert, z.B. horizontaler Loop.
+
+Text:
+
+„Zugang nur für Echte“ (in rougher, urbaner Font)
+
+Subline: „Kein Hype. Keine Poser. Nur echte Kunst auf echter Haut.“
+
+Großer Button: „Termin klarmachen“
+
+Optional: Roter animierter Lichtreflex (radial-gradient-Overlay, animated).
+
+2.3. Unsere Arbeit / Portfolio
+Grid oder horizontaler Slider mit 8–12 echten Tattoo-Referenzbildern (Platzhalter).
+
+Hover-Effekt: Bild zoomt leicht, Overlay mit kurzer Info (z.B. „Black & Grey, Sleeve, 2024“), Button „Auf Instagram ansehen“.
+
+Darunter ein Slogan: „Authentische Tattoo-Kunst, die Geschichten erzählt“.
+
+2.4. Crew / Artists
+4 Personen:
+
+David Siete Gatos (Neo Traditional / Color, 10+ Jahre, „Jedes Tattoo erzählt eine Geschichte…“)
+
+Roberto (Studio-Mitbesitzer, „Wir sorgen dafür, dass alles läuft.“)
+
+Apo (Studio-Mitbesitzer, „Das Studio ist unser Zuhause.“)
+
+XXX (Studio-Mitbesitzer, „Tattoo ist mehr als nur Kunst – es ist Leidenschaft.“)
+
+Grid-Layout, jeder im eigenen Card, schwarzweißes Portrait, kurzer Titel, Statement.
+
+Cards haben roughen Schatten, beim Hover Red Glow.
+
+Background der Section: Leichte Grunge- oder Backstein-Textur, als PNG/SVG oder per CSS (unscharf, dunkel).
+
+2.5. Tattoo-Konfigurator
+Step-by-Step-Modul:
+
+Schritt 1: Stil wählen (Black & Grey, Realism, Fineline, Neo Traditional, Geometric) – je ein Icon und Kurztext.
+
+Schritt 2: Wunschmotiv beschreiben (Textarea).
+
+Schritt 3: Größe und Stelle wählen (Dropdown + Bodymap-SVG als Illustration).
+
+Schritt 4: Kontaktdaten eingeben, Button „Konfiguration senden“.
+
+Progressbar/Schrittbalken, animiert.
+
+2.6. Kontakt / Connect
+Zwei-Spalten-Layout:
+
+Links: Adresse, Öffnungszeiten, E-Mail, Telefon (Icons), darunter Studiofoto.
+
+Rechts: Kontaktformular (Name, E-Mail, Nachricht, Button rot mit Glow).
+
+Footer:
+
+Grunge-Textur, Logo, „InkBrothers Studio Zürich – Est. 2012“
+
+Claim: „Respekt auf der Haut. Keine Kompromisse.“
+
+3. Animationen & Interaktion
+Hero:
+
+Animiertes Smoke-Overlay (siehe PNG oder SVG), Opacity max 0.17, leichte horizontale Animation (CSS keyframes).
+
+Glow-Overlay (rot, radial, langsam wandernd).
+
+Navigation:
+
+Beim Scrollen: Brushstroke-SVG blendet von links nach rechts ein (stroke-dasharray-Animation).
+
+CTA-Button bekommt auf Hover einen roten, soften Glow.
+
+Portfolio-Bilder:
+
+Mouseover-Zoom, Blur und leichter Schatten.
+
+Crew:
+
+On Hover: Card hebt sich, roter Schatten erscheint.
+
+Konfigurator:
+
+Progressbar animiert sich bei Schrittwechsel.
+
+Footer:
+
+Bei Hover über Logo kleiner Glanz/Sparkle.
+
+4. Fonts & Farben
+Headline: „Mojito Rough“ (Google Fonts), Alternativ: „Bebas Neue“
+
+Fließtext: „Inter“ oder „Montserrat“
+
+Farben:
+
+Schwarz: #111
+
+Anthrazit: #181818
+
+Rot: #a6282e
+
+Weiß: #fff
+
+Optional: leichtes Grau für Kontraste
+
+Buttons, Hover-States, Shadows IMMER mit Rot als Akzent.
+
+5. Platzhalter-Bilder
+Nutze Unsplash- oder Pexels-Links für Tattoo-Referenzen, Crew-Bilder, Studio-Innenaufnahmen.
+
+Alternativ: Füge einfache /public/-Assets für Smoke, Grunge, Crew hinzu.
+
+6. Technische Umsetzung
+React + Vite (Default), Dateistruktur: src/, public/
+
+Gliedere die Seite in Sections/Komponenten:
+
+HeroSection, NavBar, PortfolioSection, CrewSection, ConfiguratorSection, ContactSection, Footer
+
+Style mit CSS (modular oder global), nutze Variablen für Farben.
+
+Kein externes UI-Framework, alles individuell.
+
+Alle Animationen in CSS/JS umsetzen, kein unnötiges JS für einfache Transitions.
+
+7. Beispielcode für Smoke-Overlay (Hero)
+jsx
+Kopieren
+Bearbeiten
+<div className="hero">
+  <img src="/smoke.png" className="smoke-layer" alt="" />
+  <div className="hero-content">
+    <h1>ZUGANG NUR FÜR ECHTE</h1>
+    <p>Kein Hype. Keine Poser. Nur echte Kunst auf echter Haut.</p>
+    <button className="cta-btn">TERMIN KLARMACHEN</button>
+  </div>
+</div>
+css
+Kopieren
+Bearbeiten
+.hero {
+  position: relative;
+  background: url('/tattoo-bg.jpg') center/cover no-repeat #000;
+  min-height: 680px;
+}
+.smoke-layer {
+  position: absolute;
+  left: 0; top: 0; width: 100%; height: 100%;
+  opacity: 0.14;
+  animation: smoke-move 18s linear infinite;
+  z-index: 2;
+}
+@keyframes smoke-move { 0% {transform: translateX(0);} 100% {transform: translateX(12%);} }
+8. Liefere das komplette Projekt als lauffähiges Template
+mit allen Sections, Dummy-Content, Platzhalterbildern, Animationen und exakt wie oben beschrieben,
+sodass man ohne weitere Prompts sofort ein edles, modernes Tattoo-Studio-Website-Template erhält.
+
+Alle Texte, Links, Namen, Layouts und Platzhalter gemäß diesem Prompt umsetzen – keine Nacharbeit notwendig.
+
