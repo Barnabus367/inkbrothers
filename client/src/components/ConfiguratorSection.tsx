@@ -1,9 +1,5 @@
 import { useState } from "react";
 import { Palette, Camera, Ruler, User } from "lucide-react";
-import previewArm from "@assets/preview-arm.svg";
-import previewChest from "@assets/preview-chest.svg";
-import previewBack from "@assets/preview-back.svg";
-import previewLeg from "@assets/preview-leg.svg";
 
 const tattooStyles = [
   {
@@ -39,10 +35,12 @@ const tattooStyles = [
 ];
 
 const bodyParts = [
-  { id: "arm", name: "Oberarm", preview: previewArm },
-  { id: "chest", name: "Brust", preview: previewChest },
-  { id: "back", name: "Rücken", preview: previewBack },
-  { id: "leg", name: "Bein", preview: previewLeg },
+  { id: "arm", name: "Oberarm", icon: "💪", description: "Klassischer Spot für erste Tattoos" },
+  { id: "chest", name: "Brust", icon: "🫀", description: "Symbolträchtig, nah am Herzen" },
+  { id: "back", name: "Rücken", icon: "🗿", description: "Große Fläche für komplexe Designs" },
+  { id: "leg", name: "Bein", icon: "🦵", description: "Vielseitig und gut versteckbar" },
+  { id: "shoulder", name: "Schulter", icon: "💯", description: "Perfekt für Statement-Pieces" },
+  { id: "wrist", name: "Handgelenk", icon: "⌚", description: "Klein aber fein, immer sichtbar" },
 ];
 
 export default function ConfiguratorSection() {
@@ -192,53 +190,79 @@ export default function ConfiguratorSection() {
           {currentStep === 3 && (
             <div>
               <h3 className="font-bebas text-3xl text-ink-white mb-8">
-                GRÖSSE UND STELLE
+                WO SOLL'S HIN?
               </h3>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-8">
+                {/* Body Part Selection */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
-                    Gewünschte Größe
+                  <label className="block text-lg font-medium text-gray-300 mb-4">
+                    Körperstelle wählen
                   </label>
-                  <select
-                    value={formData.size}
-                    onChange={(e) =>
-                      setFormData((prev) => ({ ...prev, size: e.target.value }))
-                    }
-                    className="form-input"
-                  >
-                    <option value="">Größe wählen</option>
-                    <option value="small">Klein (bis 5cm)</option>
-                    <option value="medium">Mittel (5-15cm)</option>
-                    <option value="large">Groß (15-25cm)</option>
-                    <option value="xlarge">Sehr groß (über 25cm)</option>
-                  </select>
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                    {bodyParts.map((part) => (
+                      <button
+                        key={part.id}
+                        type="button"
+                        onClick={() => handleBodyPartChange({ target: { value: part.id } } as any)}
+                        className={`p-4 rounded-lg border-2 transition-all duration-300 text-left ${
+                          selectedBodyPart === part.id
+                            ? 'border-red-500 bg-red-500/20 text-white'
+                            : 'border-gray-600 hover:border-red-500/50 text-gray-400 hover:text-white'
+                        }`}
+                      >
+                        <div className="text-2xl mb-2">{part.icon}</div>
+                        <div className="font-bold text-white">{part.name}</div>
+                        <div className="text-xs text-gray-400 mt-1">{part.description}</div>
+                      </button>
+                    ))}
+                  </div>
                 </div>
 
+                {/* Visual Preview */}
+                {selectedBodyPart && (
+                  <div className="bg-gray-800/50 rounded-lg p-6">
+                    <h4 className="text-white font-bold mb-4">Ausgewählte Stelle: {bodyParts.find(p => p.id === selectedBodyPart)?.name}</h4>
+                    <div className="flex items-center justify-center">
+                      <div className={`w-32 h-40 rounded-lg border-2 border-red-500/50 bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center body-preview-${selectedBodyPart}`}>
+                        <div className="text-4xl">{bodyParts.find(p => p.id === selectedBodyPart)?.icon}</div>
+                      </div>
+                    </div>
+                    <p className="text-center text-gray-400 mt-4">
+                      {bodyParts.find(p => p.id === selectedBodyPart)?.description}
+                    </p>
+                  </div>
+                )}
+
+                {/* Size Selection */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
-                    Körperstelle
+                  <label className="block text-lg font-medium text-gray-300 mb-4">
+                    Wie groß soll's werden?
                   </label>
-                  <select
-                    value={formData.location}
-                    onChange={(e) =>
-                      setFormData((prev) => ({
-                        ...prev,
-                        location: e.target.value,
-                      }))
-                    }
-                    className="form-input"
-                  >
-                    <option value="">Stelle wählen</option>
-                    <option value="arm">Arm</option>
-                    <option value="leg">Bein</option>
-                    <option value="back">Rücken</option>
-                    <option value="chest">Brust</option>
-                    <option value="shoulder">Schulter</option>
-                    <option value="wrist">Handgelenk</option>
-                    <option value="neck">Nacken</option>
-                    <option value="other">Andere</option>
-                  </select>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {[
+                      { id: "small", name: "Klein", size: "bis 5cm", price: "ab 150 CHF", description: "Dezent und fein" },
+                      { id: "medium", name: "Mittel", size: "5-15cm", price: "ab 300 CHF", description: "Perfekte Balance" },
+                      { id: "large", name: "Groß", size: "15-25cm", price: "ab 800 CHF", description: "Echtes Statement" },
+                      { id: "xlarge", name: "XXL", size: "über 25cm", price: "ab 1500 CHF", description: "Kunstwerk auf Haut" }
+                    ].map((size) => (
+                      <button
+                        key={size.id}
+                        type="button"
+                        onClick={() => setFormData(prev => ({ ...prev, size: size.id }))}
+                        className={`p-4 rounded-lg border-2 transition-all duration-300 text-left ${
+                          formData.size === size.id
+                            ? 'border-red-500 bg-red-500/20 text-white'
+                            : 'border-gray-600 hover:border-red-500/50 text-gray-400 hover:text-white'
+                        }`}
+                      >
+                        <div className="font-bold text-white">{size.name}</div>
+                        <div className="text-sm text-gray-300">{size.size}</div>
+                        <div className="text-xs text-red-400 font-medium">{size.price}</div>
+                        <div className="text-xs text-gray-400 mt-1">{size.description}</div>
+                      </button>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
@@ -247,7 +271,7 @@ export default function ConfiguratorSection() {
           {currentStep === 4 && (
             <div>
               <h3 className="font-bebas text-3xl text-ink-white mb-8">
-                KONTAKTDATEN
+                WIE ERREICHEN WIR DICH?
               </h3>
 
               <div className="space-y-6">
