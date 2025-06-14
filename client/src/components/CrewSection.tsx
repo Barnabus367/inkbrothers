@@ -47,7 +47,7 @@ export default function CrewSection() {
     <section
       id="artists"
       ref={sectionRef}
-      className="section-tear relative py-20 px-4 ink-black overflow-hidden"
+      className="relative py-20 px-4 ink-black overflow-hidden"
       style={{
         background: `radial-gradient(circle at ${mousePosition.x * 100}% ${mousePosition.y * 100}%, rgba(166, 40, 46, 0.08) 0%, transparent 60%)`,
       }}

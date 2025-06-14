@@ -138,6 +138,7 @@ Changelog:
 - June 14, 2025. Updated CrewSection CTA button to match site-wide pill-shaped button style with consistent hover animations
 - June 14, 2025. Implemented targeted animations in three key areas: tattoo gallery with scale(1.03) and red glow hover effects, crew section with optimized translateY(-4px) scale(1.02) and radial background glow, configurator style tiles with border hover animations and scale(1.01) effects - all using performant CSS transitions
 - June 14, 2025. Added aggressive SVG tear/rip separators between sections: created jagged 25px height tear effect with drop-shadow, applied to portfolio→crew, crew→configurator transitions for brutal visual continuity matching tattoo studio aesthetic
+- June 14, 2025. Removed aggressive SVG tear/rip separators between sections: completely removed .section-tear CSS class and all jagged transition effects for cleaner section transitions
 ```
 
 ## User Preferences
