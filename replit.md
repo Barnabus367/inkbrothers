@@ -35,6 +35,7 @@ This is a full-stack web application for InkBrothers Studio Zürich, a modern ta
 - **Crew Section**: Team member showcase with profiles and quotes
 - **Configurator Section**: Multi-step tattoo booking/consultation form
 - **Contact Section**: Contact information and inquiry form
+- **Experimental Lab**: Advanced interactive features including KI Vision (camera-based body scanning), Pain Simulator (personalized pain prediction), and Neural Designer (AI-powered tattoo design generation)
 
 ### UI Components
 - Complete shadcn/ui component library including buttons, forms, dialogs, tooltips, etc.
@@ -112,6 +113,7 @@ Changelog:
 - June 14, 2025. Replaced all placeholder images with authentic InkBrothers Studio tattoo portfolio
 - June 14, 2025. Added revolutionary experimental features (AI Vision, Neural Pattern Matching, Quantum Design, etc.)
 - June 14, 2025. Updated crew section to feature David Coello Misa as single master tattoo artist, removed Neural Interface Studio
+- June 14, 2025. Debugged and enhanced experimental lab: removed Sonic component, improved KI Vision with camera integration, advanced Pain Simulator with personalization, sophisticated Neural Designer with comprehensive design generation
 ```
 
 ## User Preferences
