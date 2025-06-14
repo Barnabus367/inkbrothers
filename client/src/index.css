@@ -363,8 +363,9 @@
 }
 
 .btn {
-  @apply inline-flex items-center justify-center gap-4 px-6 py-3 border border-white rounded-full text-white font-medium tracking-widest uppercase transition-all duration-300 ease-out;
+  @apply inline-flex items-center justify-center gap-2 px-4 py-2 border border-white rounded-full text-white font-medium tracking-widest uppercase transition-all duration-300 ease-out text-sm;
   background: transparent;
+  height: 48px;
 }
 
 .btn:hover {
@@ -372,7 +373,7 @@
 }
 
 .btn-arrow-circle {
-  @apply w-8 h-8 rounded-full border border-white flex items-center justify-center transition-all duration-300 ease-out;
+  @apply w-7 h-7 rounded-full border border-white flex items-center justify-center transition-all duration-300 ease-out;
   background: transparent;
 }
 
@@ -382,7 +383,7 @@
 }
 
 .btn-arrow-circle svg {
-  @apply w-4 h-4 transition-colors duration-300;
+  @apply w-3 h-3 transition-colors duration-300;
 }
 
 .btn:hover .btn-arrow-circle svg {

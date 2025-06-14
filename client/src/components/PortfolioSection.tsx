@@ -251,17 +251,12 @@ export default function PortfolioSection() {
           <p className="text-gray-400 mb-6 text-lg">
             Mehr von unserer Arbeit siehst du auf Instagram
           </p>
-          <button className="group relative bg-gradient-to-r from-red-600 to-red-700 text-white px-8 py-4 font-bebas text-xl tracking-wider transition-all duration-300 transform hover:scale-105 hover:rotate-1 overflow-hidden">
-            <span className="relative z-10 flex items-center gap-3">
-              <Instagram className="w-6 h-6" />
-              @INKBROTHERS_ZURICH
-              <ExternalLink className="w-5 h-5" />
+          <a href="https://instagram.com/inkbrothers_zurich" target="_blank" rel="noopener noreferrer" className="btn">
+            @INKBROTHERS_ZURICH
+            <span className="btn-arrow-circle">
+              <Instagram className="w-3 h-3" />
             </span>
-
-            {/* Button effects */}
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
-            <div className="absolute inset-0 border-2 border-red-400 opacity-0 group-hover:opacity-100 animate-pulse" />
-          </button>
+          </a>
         </div>
       </div>
     </section>
