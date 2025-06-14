@@ -149,28 +149,8 @@ export default function Navigation() {
               ))}
 
               {/* Enhanced CTA Button */}
-              <button className="relative btn-cta-advanced group overflow-hidden">
-                <span className="relative z-10 font-bold tracking-wider">
-                  TERMIN BUCHEN
-                </span>
-
-                {/* Animated background */}
-                <div className="absolute inset-0 bg-gradient-to-r from-red-600 via-red-700 to-red-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
-
-                {/* Particle burst effect */}
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  {Array.from({ length: 8 }).map((_, i) => (
-                    <div
-                      key={i}
-                      className="absolute w-1 h-1 bg-white rounded-full animate-float"
-                      style={{
-                        left: `${10 + i * 10}%`,
-                        top: `${20 + (i % 3) * 20}%`,
-                        animationDelay: `${i * 0.1}s`,
-                      }}
-                    />
-                  ))}
-                </div>
+              <button className="btn-cta-advanced">
+                TERMIN BUCHEN
               </button>
             </div>
           </div>

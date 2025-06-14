@@ -339,11 +339,12 @@ export default function ConfiguratorSection() {
             <button
               onClick={prevStep}
               disabled={currentStep === 1}
-              className={`px-6 py-3 rounded font-semibold transition-all duration-300 ${
+              className={`px-6 py-3 font-bold tracking-wider uppercase transition-all duration-200 ease-in-out ${
                 currentStep === 1
                   ? "bg-gray-600 text-gray-400 cursor-not-allowed"
-                  : "bg-gray-600 text-white hover:bg-gray-700"
+                  : "bg-gray-600 text-white hover:bg-gray-700 hover:scale-105"
               }`}
+              style={{ borderRadius: '12px', height: '48px' }}
             >
               ZURÜCK
             </button>

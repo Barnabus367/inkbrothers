@@ -104,18 +104,10 @@ export default function HeroSection() {
         </div>
 
         {/* Interactive CTA Button */}
-        <div className="relative inline-block group">
-          <button className="relative bg-red-600 text-white px-12 py-6 text-xl font-bold tracking-wider transition-all duration-300 overflow-hidden group-hover:bg-red-700 group-hover:scale-105 group-hover:rotate-1">
-            <span className="relative z-10">TERMIN KLARMACHEN</span>
-
-            {/* Button animations */}
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
-
-            <div className="absolute inset-0 border-2 border-red-400 opacity-0 group-hover:opacity-100 animate-pulse"></div>
+        <div className="relative inline-block">
+          <button className="btn-cta text-xl px-12" style={{ height: '56px' }}>
+            TERMIN KLARMACHEN
           </button>
-
-          {/* Button glow effect */}
-          <div className="absolute inset-0 bg-red-600 blur-xl opacity-0 group-hover:opacity-30 transition-opacity duration-300 -z-10"></div>
         </div>
 
         {/* Scroll Indicator */}
