@@ -61,40 +61,7 @@ export default function HeroSection() {
           isLoaded ? "translate-y-0 opacity-100" : "translate-y-20 opacity-0"
         }`}
       >
-        {/* Animated Border Frame */}
-        <div className="relative mb-12">
-          <div className="absolute inset-0 border-2 border-red-500/30 rounded-lg animate-pulse"></div>
-          <div className="absolute inset-2 border border-red-500/60 rounded animate-glow-pulse"></div>
 
-          {/* Main Title with Glitch Effect */}
-          <h1 className="relative font-bebas text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-bold py-8 px-4 tracking-wider hero-title-glitch">
-            <span className="relative z-10 text-white drop-shadow-2xl">
-              ZUGANG NUR
-              <br />
-              <span className="text-red-500 inline-block transform hover:scale-110 transition-transform duration-300">
-                FÜR ECHTE
-              </span>
-            </span>
-
-            {/* Glitch layers */}
-            <span
-              className="absolute inset-0 text-red-500 opacity-80 animate-glitch-1"
-              aria-hidden="true"
-            >
-              ZUGANG NUR
-              <br />
-              FÜR ECHTE
-            </span>
-            <span
-              className="absolute inset-0 text-cyan-400 opacity-60 animate-glitch-2"
-              aria-hidden="true"
-            >
-              ZUGANG NUR
-              <br />
-              FÜR ECHTE
-            </span>
-          </h1>
-        </div>
 
         {/* Subtitle with Typewriter Effect */}
         <div className="mb-12 overflow-hidden">
@@ -115,13 +82,7 @@ export default function HeroSection() {
           </a>
         </div>
 
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white/60 animate-bounce">
-          <div className="flex flex-col items-center">
-            <span className="text-sm mb-2 tracking-wider">SCROLL</span>
-            <div className="w-px h-8 bg-gradient-to-b from-red-500 to-transparent"></div>
-          </div>
-        </div>
+        
       </div>
     </section>
   );
