@@ -100,13 +100,14 @@ export default function ConfiguratorSection() {
     setCanGenerate(hasDescription && hasStyle);
   };
 
-  // Create comprehensive AI prompt from all user inputs
-  const buildAIPrompt = () => {
+  // Calculate dynamic character limits
+  const MAX_PROMPT_LENGTH = 400;
+  
+  const calculatePromptSuffix = () => {
     const selectedStyleData = tattooStyles.find(s => s.id === selectedStyle);
-    const selectedBodyPartData = bodyParts.find(b => b.id === selectedBodyPart);
     
     // Style mapping to English
-    const styleText = selectedStyleData ? `in ${selectedStyleData.name.toLowerCase().replace('&', 'and')} style` : "";
+    const styleText = selectedStyleData ? `, in ${selectedStyleData.name.toLowerCase().replace('&', 'and')} style` : "";
     
     // Body part mapping to English
     const bodyPartMapping: Record<string, string> = {
@@ -117,27 +118,29 @@ export default function ConfiguratorSection() {
       'shoulder': 'shoulder',
       'wrist': 'wrist'
     };
-    const bodyPartText = selectedBodyPart ? `for the ${bodyPartMapping[selectedBodyPart] || selectedBodyPart}` : "";
+    const bodyPartText = selectedBodyPart ? `, for the ${bodyPartMapping[selectedBodyPart] || selectedBodyPart}` : "";
     
     // Size mapping to English
     const sizeMapping: Record<string, string> = {
-      'small': 'size: small (up to 5cm)',
-      'medium': 'size: medium (5-15cm)', 
-      'large': 'size: large (15-25cm)',
-      'xlarge': 'size: very large (over 25cm)'
+      'small': ', size: small (up to 5cm)',
+      'medium': ', size: medium (5-15cm)', 
+      'large': ', size: large (15-25cm)',
+      'xlarge': ', size: very large (over 25cm)'
     };
     const sizeText = formData.size ? sizeMapping[formData.size] : "";
     
-    // Combine all elements into optimal English prompt
-    const fullPrompt = [
-      formData.description,
-      styleText,
-      bodyPartText,
-      sizeText,
-      "tattoo design, high resolution, clear lines, trending on instagram, detailed"
-    ].filter(Boolean).join(", ");
-    
-    return fullPrompt;
+    return `${styleText}${bodyPartText}${sizeText}, tattoo design, high resolution, clear lines, trending on instagram, detailed`;
+  };
+
+  const promptSuffix = calculatePromptSuffix();
+  const allowedUserLength = Math.max(10, MAX_PROMPT_LENGTH - promptSuffix.length);
+  const remainingChars = allowedUserLength - formData.description.length;
+
+  // Create comprehensive AI prompt from all user inputs
+  const buildAIPrompt = () => {
+    const fullPrompt = formData.description + promptSuffix;
+    // Ensure we never exceed the maximum length
+    return fullPrompt.slice(0, MAX_PROMPT_LENGTH);
   };
 
   // AI Image Generation Function
@@ -270,6 +273,7 @@ export default function ConfiguratorSection() {
                     </label>
                     <textarea
                       rows={8}
+                      maxLength={allowedUserLength}
                       value={formData.description}
                       onChange={(e) =>
                         setFormData((prev) => ({
@@ -280,9 +284,14 @@ export default function ConfiguratorSection() {
                       className="form-textarea"
                       placeholder="Erzähl uns von deiner Tattoo-Idee... (z.B. Stil, Motive, Bedeutung, Inspiration, Größenvorstellung)"
                     />
-                    <p className="text-xs text-gray-500 mt-2">
-                      Mindestens 5 Zeichen für KI-Vorschau erforderlich
-                    </p>
+                    <div className="flex justify-between text-xs mt-2">
+                      <p className="text-gray-500">
+                        Mindestens 5 Zeichen für KI-Vorschau erforderlich
+                      </p>
+                      <p className={`${remainingChars <= 20 ? 'text-red-400' : remainingChars <= 50 ? 'text-yellow-400' : 'text-gray-500'}`}>
+                        Noch {remainingChars} Zeichen verfügbar
+                      </p>
+                    </div>
                   </div>
 
                   {/* AI Generation Button */}
@@ -318,12 +327,17 @@ export default function ConfiguratorSection() {
                     {/* AI Prompt Preview */}
                     {canGenerate && (
                       <div className="mt-4 p-3 bg-gray-800/50 rounded-lg border border-gray-600">
-                        <h5 className="text-sm font-medium text-gray-300 mb-2">KI-Prompt Vorschau:</h5>
+                        <div className="flex justify-between items-center mb-2">
+                          <h5 className="text-sm font-medium text-gray-300">KI-Prompt Vorschau:</h5>
+                          <span className="text-xs text-gray-400">
+                            {buildAIPrompt().length}/{MAX_PROMPT_LENGTH} Zeichen
+                          </span>
+                        </div>
                         <p className="text-xs text-gray-400 font-mono leading-relaxed">
                           "{buildAIPrompt()}"
                         </p>
                         <p className="text-xs text-gray-500 mt-2">
-                          Dieser Prompt wird an die KI gesendet (inkl. Stil, Körperstelle, Größe)
+                          Vollständiger Prompt inkl. automatischer Tags (Stil, Körperstelle, Größe)
                         </p>
                       </div>
                     )}

@@ -84,8 +84,8 @@ function validateInput(description: string): { isValid: boolean; error?: string 
     return { isValid: false, error: "Beschreibung muss mindestens 5 Zeichen lang sein." };
   }
   
-  if (trimmed.length > 250) {
-    return { isValid: false, error: "Beschreibung darf maximal 250 Zeichen lang sein." };
+  if (trimmed.length > 400) {
+    return { isValid: false, error: `Gesamter Prompt darf maximal 400 Zeichen lang sein. Aktuell: ${trimmed.length} Zeichen.` };
   }
   
   // Basic content filtering

@@ -1,0 +1,74 @@
+Ziel:
+Der Tattoo-Konfigurator soll es Nutzern ermöglichen, eine ausführliche Tattoo-Beschreibung einzugeben. Die finale Zeichenbegrenzung (z. B. 400 Zeichen) muss für den gesamten KI-Prompt gelten, also Kundeneingabe plus automatisch ergänzte Infos (Stil, Körperstelle, Größe, KI-Tags).
+
+Aktueller Fehler:
+
+Das User-Textfeld hat ein festes Limit von 250 Zeichen.
+
+Wird automatisch Stil, Körperstelle, Größe usw. an den Prompt angehängt, überschreitet der finale KI-Prompt oft das Limit.
+
+Ergebnis: Der Nutzer bekommt eine Fehlermeldung, obwohl sein Input eigentlich zulässig wäre.
+
+UX ist dadurch schlecht: Kunden verstehen nicht, warum sie weniger schreiben dürfen.
+
+Was ist zu tun?
+1. Mache das maximale Zeichenlimit dynamisch:
+
+Berechne, wie viele Zeichen für System-Tags (z. B. „, in black and grey style, for the upper arm, size: medium (5–15cm), tattoo design, high resolution, clear lines, trending on instagram, detailed“) reserviert werden.
+
+Ziehe diese vom Gesamtlängen-Limit ab (empfohlen: 400 Zeichen).
+
+Setze das maxLength-Attribut im Eingabefeld dynamisch so, dass die Summe von User-Text plus System-Tags nie das Limit überschreitet.
+
+2. Zeige dem Nutzer immer an, wie viele Zeichen er noch schreiben kann:
+
+Beispiel: „Noch 137 Zeichen verfügbar“
+
+3. Kürze, falls nötig, den Gesamten Prompt am Ende vor dem API-Call, damit keine Fehler entstehen.
+
+Konkrete Vorgaben für die Umsetzung (in React/TS/JS):
+Berechne:
+
+js
+Kopieren
+Bearbeiten
+const promptSuffix =
+  (selectedStyle ? `, in ${selectedStyle} style` : "") +
+  (selectedBodyPart ? `, for the ${selectedBodyPart}` : "") +
+  (size ? `, size: ${size}` : "") +
+  ", tattoo design, high resolution, clear lines, trending on instagram, detailed";
+
+const MAX_PROMPT_LENGTH = 400;
+const allowedUserLength = MAX_PROMPT_LENGTH - promptSuffix.length;
+Setze das Limit im Eingabefeld:
+
+jsx
+Kopieren
+Bearbeiten
+<textarea
+  maxLength={allowedUserLength}
+  value={userDescription}
+  onChange={...}
+  placeholder={`Du kannst noch ${allowedUserLength - userDescription.length} Zeichen eingeben`}
+/>
+Baue den finalen Prompt so:
+
+js
+Kopieren
+Bearbeiten
+const prompt = (userDescription + promptSuffix).slice(0, MAX_PROMPT_LENGTH);
+Sende diesen Prompt wie gewohnt an das Backend/HuggingFace.
+
+Erfolgskriterien:
+Nutzer können maximalen Platz für ihre Beschreibung nutzen, ohne blockiert zu werden.
+
+Es gibt nie einen Prompt, der das KI-Limit überschreitet – alle automatischen Tags werden berücksichtigt.
+
+Fehlermeldungen sind klar und beziehen sich auf die Gesamtlänge, nicht nur das Textfeld.
+
+User Experience ist dadurch maximal logisch, verständlich und freundlich.
+
+Prompt für Replit:
+
+Passe den Tattoo-Konfigurator so an, dass das Zeichenlimit dynamisch aus dem Gesamtlängen-Limit (z. B. 400 Zeichen) abzüglich der automatisch angehängten System-Tags berechnet wird. Begrenze das Eingabefeld entsprechend, gib immer die noch verfügbaren Zeichen aus und sorge dafür, dass der finale KI-Prompt nie das Limit überschreitet. Die Website muss immer bedienbar bleiben, auch wenn das Limit erreicht ist.
+
