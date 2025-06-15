@@ -1,0 +1,99 @@
+1. Modell-Endpunkt umstellen
+Stelle im Backend sicher, dass folgender API-Endpoint verwendet wird:
+
+ruby
+Kopieren
+Bearbeiten
+https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-xl-base-1.0
+2. Access Token
+Nutze den aktuellen HuggingFace Access Token, der die Rechte „Make calls to Inference Endpoints“ besitzt.
+
+Speichere diesen Token als Secret HUGGINGFACE_ACCESS_TOKEN in Replit.
+
+3. API-Request
+Sende einen POST-Request an die oben genannte URL mit folgendem JSON:
+
+json
+Kopieren
+Bearbeiten
+{
+  "inputs": "KI-Prompt aus Konfigurator (Beschreibung, Stil, Körperstelle, Größe, Tattoo-Tags)"
+}
+Der Prompt sollte maximal 300–400 Zeichen lang sein und vorzugsweise auf Englisch formuliert werden.
+
+4. Backend-Code
+Beispiel-Code (Node.js / Express):
+
+js
+Kopieren
+Bearbeiten
+const HF_MODEL_URL = "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-xl-base-1.0";
+const HF_TOKEN = process.env.HUGGINGFACE_ACCESS_TOKEN;
+
+const response = await fetch(HF_MODEL_URL, {
+  method: "POST",
+  headers: {
+    "Authorization": `Bearer ${HF_TOKEN}`,
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({ inputs: prompt }),
+});
+Prüfe nach jedem API-Call, ob response.ok ist und Content-Type ein Bild enthält.
+
+5. Prompt-Logik
+Prompt wird im Frontend dynamisch aus allen Konfigurator-Feldern zusammengesetzt:
+
+Beschreibung (User-Eingabe)
+
+Stil (z. B. "in black and grey style")
+
+Körperstelle (z. B. "for upper arm")
+
+Größe (z. B. "size: small (up to 5cm)")
+
+Tattoo-spezifische Tags: "tattoo design, high resolution, clear lines, trending on instagram, detailed"
+
+Beispiel für den fertigen Prompt:
+
+arduino
+Kopieren
+Bearbeiten
+"A small airplane with a dashed line forming a heart, in black and grey style, for upper arm, size: small (up to 5cm), tattoo design, high resolution, clear lines, trending on instagram, detailed"
+Gesamtlänge maximal 400 Zeichen!
+
+6. Fehler-Handling
+Logge die vollständige API-Response (Body, Status, Content-Type) zur Fehlerdiagnose.
+
+Bei Fehlern (kein Bild in Response) gib die genaue Fehlermeldung an den User zurück.
+
+Bei 404/403: Wechsle ggf. das Modell oder prüfe den Token.
+
+7. User Experience
+Zeige dem User bei Fehlern immer eine verständliche Meldung.
+
+Ladeanimation & KI-Preview wie gehabt.
+
+Begrenze die User-Beschreibung dynamisch, sodass der Gesamt-Prompt nie das Zeichenlimit überschreitet.
+
+8. Testen
+Starte das Backend neu.
+
+Teste einen einfachen Prompt (englisch, <300 Zeichen), z. B.:
+
+scss
+Kopieren
+Bearbeiten
+"a minimalistic airplane tattoo, dashed line forming a heart, fine line, upper arm, small, tattoo design"
+Prüfe, ob ein Bild erzeugt wird. Wenn ja: System ist bereit!
+
+Kurz:
+API-Endpoint auf SDXL umstellen
+
+Access Token mit Inference-Right als Secret hinterlegen
+
+Prompt-Logik wie oben
+
+Fehler abfangen & User klar informieren
+
+Testen
+
