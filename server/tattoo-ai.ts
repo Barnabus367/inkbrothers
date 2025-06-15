@@ -169,7 +169,14 @@ async function generateTattooImage(prompt: string): Promise<{ success: boolean; 
       
       console.log("Request body keys:", Object.keys(requestBody));
       
-      const response = await fetch("https://stablediffusionapi.com/api/v3/text2img", {
+      // Try multiple endpoint versions
+      const endpoints = [
+        "https://stablediffusionapi.com/api/v3/text2img",
+        "https://stablediffusionapi.com/api/v4/dreambooth",
+        "https://stablediffusionapi.com/api/v5/text2img"
+      ];
+      
+      const response = await fetch(endpoints[0], {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -203,6 +210,8 @@ async function generateTattooImage(prompt: string): Promise<{ success: boolean; 
         
         if (response.status === 401) {
           console.error("❌ Invalid API key for StableDiffusionAPI");
+        } else if (response.status === 404) {
+          console.error("❌ API endpoint not found - key may need activation or wrong endpoint");
         } else if (response.status === 429) {
           console.error("❌ Rate limit exceeded for StableDiffusionAPI");
         }
