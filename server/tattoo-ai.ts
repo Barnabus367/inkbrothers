@@ -87,8 +87,8 @@ function validateInput(description: string): { isValid: boolean; error?: string 
     return { isValid: false, error: "Beschreibung muss mindestens 5 Zeichen lang sein." };
   }
   
-  if (trimmed.length > 400) {
-    return { isValid: false, error: `Gesamter Prompt darf maximal 400 Zeichen lang sein. Aktuell: ${trimmed.length} Zeichen.` };
+  if (trimmed.length > 300) {
+    return { isValid: false, error: `Prompt darf maximal 300 Zeichen lang sein. Aktuell: ${trimmed.length} Zeichen.` };
   }
   
   // Basic content filtering
@@ -141,62 +141,96 @@ async function generateTattooImage(prompt: string): Promise<{ success: boolean; 
     };
   }
   
+  // Limit prompt to 300 characters for compatibility
+  const limitedPrompt = prompt.slice(0, 300);
+  
   try {
     // Try multiple model endpoints for better compatibility
     const MODEL_ENDPOINTS = [
+      "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-xl-base-1.0",
       "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-2-1",
-      "https://api-inference.huggingface.co/models/runwayml/stable-diffusion-v1-5",
-      "https://api-inference.huggingface.co/models/CompVis/stable-diffusion-v1-4"
+      "https://api-inference.huggingface.co/models/runwayml/stable-diffusion-v1-5"
     ];
-    const MODEL_URL = MODEL_ENDPOINTS[0]; // Primary endpoint
-    console.log("Calling HuggingFace:", MODEL_URL);
-    console.log("Prompt length:", prompt.length);
     
-    // Using Stable Diffusion 2.1 model for better tattoo generation
-    const response = await fetch(MODEL_URL, {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${HUGGINGFACE_TOKEN}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        inputs: prompt,
-        parameters: {
-          num_inference_steps: 30,
-          guidance_scale: 7.5,
-          width: 512,
-          height: 512,
-        }
-      }),
-      signal: AbortSignal.timeout(40000) // 40 second timeout
-    });
-    
-    console.log("HuggingFace response code:", response.status);
-    console.log("Response headers:", Object.fromEntries(response.headers.entries()));
-    
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error(`HuggingFace API error: ${response.status} - ${response.statusText}`);
-      console.error("Error details:", errorText);
+    for (let i = 0; i < MODEL_ENDPOINTS.length; i++) {
+      const MODEL_URL = MODEL_ENDPOINTS[i];
+      console.log(`\n=== Attempt ${i + 1}/${MODEL_ENDPOINTS.length} ===`);
+      console.log("Calling HuggingFace:", MODEL_URL);
+      console.log("Prompt:", limitedPrompt);
+      console.log("Prompt length:", limitedPrompt.length);
       
-      if (response.status === 503) {
-        return { 
-          success: false, 
-          error: "KI-Service ist temporär überlastet. Versuche es in einigen Minuten erneut." 
-        };
-      }
-      
-      return { 
-        success: false, 
-        error: "KI-Generierung fehlgeschlagen. Versuche es später erneut." 
+      // Simplified JSON format as requested
+      const requestBody = {
+        inputs: limitedPrompt
       };
+      
+      console.log("Request body:", JSON.stringify(requestBody));
+      
+      const response = await fetch(MODEL_URL, {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${HUGGINGFACE_TOKEN}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody),
+        signal: AbortSignal.timeout(40000) // 40 second timeout
+      });
+      
+      console.log("HuggingFace response code:", response.status);
+      console.log("Response headers:", Object.fromEntries(response.headers.entries()));
+      console.log("Content-Type:", response.headers.get('content-type'));
+      
+      if (response.ok) {
+        const contentType = response.headers.get('content-type');
+        if (contentType?.includes('image/')) {
+          // Success! Convert image to base64
+          const imageBuffer = await response.arrayBuffer();
+          const base64Image = Buffer.from(imageBuffer).toString('base64');
+          const imageUrl = `data:image/png;base64,${base64Image}`;
+          
+          console.log("✅ Image generated successfully, size:", imageBuffer.byteLength, "bytes");
+          return { success: true, image: imageUrl };
+        } else {
+          // Unexpected content type
+          const responseText = await response.text();
+          console.log("Unexpected response format:", responseText);
+          continue; // Try next endpoint
+        }
+      } else {
+        const errorText = await response.text();
+        console.error(`❌ HuggingFace API error: ${response.status} - ${response.statusText}`);
+        console.error("Error body:", errorText);
+        
+        // Parse specific error messages for user feedback
+        let userError = "KI-Generierung fehlgeschlagen.";
+        if (response.status === 404) {
+          userError = "Das KI-Modell ist nicht verfügbar. Versuche es später erneut.";
+        } else if (response.status === 503) {
+          userError = "KI-Service ist überlastet. Versuche es in wenigen Minuten erneut.";
+        } else if (response.status === 401 || response.status === 403) {
+          userError = "KI-Service-Berechtigung fehlt. Kontaktiere den Administrator.";
+        } else if (errorText.includes("loading")) {
+          userError = "KI-Modell lädt noch. Versuche es in 1-2 Minuten erneut.";
+        } else if (errorText.includes("rate")) {
+          userError = "Zu viele KI-Anfragen. Warte einige Minuten und versuche es erneut.";
+        }
+        
+        if (i === MODEL_ENDPOINTS.length - 1) {
+          // Last attempt failed
+          return { 
+            success: false, 
+            error: `${userError} (Fehler: ${response.status} - ${errorText})` 
+          };
+        }
+        // Continue to next endpoint
+      }
     }
     
-    const imageBuffer = await response.arrayBuffer();
-    const base64Image = Buffer.from(imageBuffer).toString('base64');
-    const dataUrl = `data:image/png;base64,${base64Image}`;
-    
-    return { success: true, image: dataUrl };
+    // All endpoints failed
+    return { 
+      success: false, 
+      error: "Alle KI-Modelle sind nicht verfügbar. Versuche es später erneut." 
+    };
     
   } catch (error: any) {
     console.error('HuggingFace generation error:', error.message);
