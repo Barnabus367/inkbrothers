@@ -57,6 +57,12 @@ export default function ConfiguratorSection() {
     message: "",
   });
 
+  // AI Image Generation State
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [generatedImage, setGeneratedImage] = useState<string | null>(null);
+  const [generationError, setGenerationError] = useState<string | null>(null);
+  const [canGenerate, setCanGenerate] = useState(false);
+
   const progress = (currentStep / 4) * 100;
 
   const handleStyleSelect = (styleId: string) => {
@@ -79,6 +85,53 @@ export default function ConfiguratorSection() {
   const prevStep = () => {
     if (currentStep > 1) {
       setCurrentStep(currentStep - 1);
+    }
+  };
+
+  // Check if AI generation is possible
+  const checkGenerationReady = () => {
+    const hasDescription = formData.description.trim().length >= 5;
+    const hasStyle = selectedStyle !== "";
+    setCanGenerate(hasDescription && hasStyle);
+  };
+
+  // AI Image Generation Function
+  const generateTattooPreview = async () => {
+    if (!canGenerate || isGenerating) return;
+    
+    setIsGenerating(true);
+    setGenerationError(null);
+    
+    try {
+      const selectedStyleData = tattooStyles.find(s => s.id === selectedStyle);
+      const stylePrompt = selectedStyleData ? ` in ${selectedStyleData.name.toLowerCase()} style` : "";
+      const fullDescription = `${formData.description}${stylePrompt}`;
+      
+      const response = await fetch('/api/generate-tattoo', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          description: fullDescription
+        }),
+      });
+      
+      const result = await response.json();
+      
+      if (result.image) {
+        setGeneratedImage(result.image);
+      }
+      
+      if (result.error) {
+        setGenerationError(result.error);
+      }
+      
+    } catch (error) {
+      console.error('Generation error:', error);
+      setGenerationError('Netzwerkfehler bei der KI-Generierung. Prüfe deine Internetverbindung.');
+    } finally {
+      setIsGenerating(false);
     }
   };
 

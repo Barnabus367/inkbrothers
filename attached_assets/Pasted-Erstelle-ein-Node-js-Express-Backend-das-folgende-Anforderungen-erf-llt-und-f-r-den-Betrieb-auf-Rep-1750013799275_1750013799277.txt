@@ -1,0 +1,78 @@
+Erstelle ein Node.js/Express-Backend, das folgende Anforderungen erfüllt und für den Betrieb auf Replit optimiert ist:
+
+1. API-Endpoint /generate-tattoo (POST)
+Nimmt einen JSON-Body { description: "Tattoo Wunschbeschreibung" } entgegen.
+
+Nutzt den als Replit Secret gespeicherten HuggingFace Access Token (HUGGINGFACE_ACCESS_TOKEN), niemals im Frontend anzeigen!
+
+Baut aus der Beschreibung einen optimierten Prompt für Stable Diffusion (z. B. automatisch „tattoo design, high resolution, clear lines, skin, trending on instagram, detailed“ ergänzen).
+
+Sendet diesen Prompt als POST an das HuggingFace Inference Endpoint für Stable Diffusion.
+
+Timeout: Brich den Request ab, wenn HuggingFace nach 40 Sekunden nicht antwortet, und gib eine sinnvolle Fehlermeldung zurück.
+
+Input-Validation: Erlaube nur sinnvolle Texte (5–250 Zeichen), gib bei Fehlern ein verständliches Feedback.
+
+Absolut fail-safe: Wenn HuggingFace nicht erreichbar ist oder ein Fehler passiert, gib IMMER ein neutrales Fallback-Bild (SVG-Icon) und einen Error-Text zurück, damit die Seite nie crasht.
+
+Response: Liefere im Erfolgsfall das generierte Tattoo als Base64-PNG (Data-URL) zurück, im Fehlerfall das Fallback-Bild plus Error.
+
+2. Sicherheit und Abuse-Prevention
+Rate-Limit: Maximal 4 Requests pro IP und 10 Minuten (im Speicher, keine Datenbank nötig).
+
+Kein Token-Leak: Der API-Key ist NUR im Backend, nie im Frontend sichtbar.
+
+Input-Sanitation: Keine Ausführung oder Speicherung von Userdaten, nur reine Weiterleitung der Beschreibung als Prompt.
+
+3. Developer Experience
+Schnell testbar: Root-Endpoint / gibt einen kurzen Status zurück („Tattoo KI-API aktiv“).
+
+CORS aktiviert: Jeder kann das Frontend testen (auch extern).
+
+Nur Standard-Node-Modules: Keine Datenbank, kein File-Logging, Dependencies nur express und node-fetch.
+
+4. Bonus-Funktionen (kostenlos)
+Prompt-Optimierung: Wenn die Beschreibung zu kurz ist, hänge automatisch das Wort „tattoo“ an.
+
+Mini-Logging: Logge alle API-Calls mit Zeit und IP (nur für Debug, keine personenbezogenen Daten abspeichern).
+
+Fallback-Bild: Verwende ein lizenzfreies SVG-Icon einer Tattoo-Maschine als Fallback, damit das UI nie leer bleibt.
+
+5. Anforderungen für die Umsetzung
+Die Lösung muss robust gegen alle Fehlerquellen laufen:
+
+Kein Absturz auch bei falschem Token, API-Ausfall, zu langen Anfragen, Spam, fehlerhaftem Input etc.
+
+Muss auf Replit mit der Standard-Portumgebung funktionieren (also Port aus process.env.PORT nutzen).
+
+Zusätzlicher Hinweis
+Der Prompt und das System müssen so gestaltet sein, dass NIEMALS der gesamte Service oder das User-Frontend ausfällt, selbst wenn HuggingFace temporär nicht erreichbar ist oder technische Probleme auftreten.
+
+Beispiel-Response im Erfolgsfall:
+
+json
+Kopieren
+Bearbeiten
+{
+  "image": "data:image/png;base64,iVBORw0KGgoAAAANS...usw",
+  "error": null
+}
+Beispiel-Response im Fehlerfall:
+
+json
+Kopieren
+Bearbeiten
+{
+  "image": "https://upload.wikimedia.org/wikipedia/commons/8/89/Tattoo_Machine_icon.svg",
+  "error": "Die KI-Generierung ist fehlgeschlagen. Versuche es später erneut."
+}
+Optional für die Weiterentwicklung:
+
+Einbindung von File-Upload für Referenzbilder (Cloudinary Free-Tier).
+
+E-Mail-Integration (Mailgun, SendGrid oder Nodemailer).
+
+NSFW-Filter oder Keyword-Blacklist (optional).
+
+Frontend-Snippet mit Ladeanzeige und Fehlerbehandlung (React/HTML).
+
