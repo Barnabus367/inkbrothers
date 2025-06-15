@@ -102,28 +102,17 @@ function validateInput(description: string): { isValid: boolean; error?: string 
 
 /**
  * Optimizes user description into a professional tattoo prompt
- * Adds necessary keywords for better Stable Diffusion results
+ * Frontend already provides complete prompt, just clean and validate
  */
 function optimizeTattooPrompt(description: string): string {
-  const basePrompt = description.trim();
+  // Frontend provides complete prompt with all elements
+  // Just clean and ensure proper formatting
+  const cleanPrompt = description.trim()
+    .replace(/\s+/g, ' ')  // Multiple spaces to single
+    .replace(/,\s*,/g, ',') // Remove duplicate commas
+    .replace(/^[",\s]+|[",\s]+$/g, ''); // Remove leading/trailing quotes and spaces
   
-  // Add "tattoo" if not present
-  const needsTattooKeyword = !basePrompt.toLowerCase().includes('tattoo');
-  
-  const optimizedPrompt = [
-    needsTattooKeyword ? `${basePrompt} tattoo` : basePrompt,
-    "tattoo design",
-    "high resolution",
-    "clean lines", 
-    "professional tattoo art",
-    "detailed linework",
-    "black and grey style",
-    "skin texture",
-    "trending on instagram",
-    "award winning tattoo"
-  ].join(", ");
-  
-  return optimizedPrompt;
+  return cleanPrompt;
 }
 
 /**
@@ -145,10 +134,10 @@ async function generateTattooImage(prompt: string): Promise<{ success: boolean; 
   const limitedPrompt = prompt.slice(0, 400);
   
   try {
-    // Primary SDXL model endpoint as specified
-    const HF_MODEL_URL = "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-xl-base-1.0";
+    // Primary Stable Diffusion 2.1 model endpoint as specified
+    const HF_MODEL_URL = "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-2-1";
     
-    console.log("Calling HuggingFace SDXL:", HF_MODEL_URL);
+    console.log("Calling HuggingFace SD 2.1:", HF_MODEL_URL);
     console.log("Prompt:", limitedPrompt);
     console.log("Prompt length:", limitedPrompt.length);
     

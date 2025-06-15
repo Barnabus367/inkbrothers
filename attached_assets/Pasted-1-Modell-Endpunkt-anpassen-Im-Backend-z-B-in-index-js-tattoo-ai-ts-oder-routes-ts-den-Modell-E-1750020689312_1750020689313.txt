@@ -1,0 +1,77 @@
+1. Modell-Endpunkt anpassen
+Im Backend (z. B. in index.js, tattoo-ai.ts oder routes.ts) den Modell-Endpunkt auf:
+
+js
+Kopieren
+Bearbeiten
+const HF_MODEL_URL = "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-2-1";
+2. Access Token
+Nutze einen HuggingFace-Token vom Typ „Write“ oder einen Fine-grained Token mit der Berechtigung „Make calls to Inference Endpoints“, ohne Einschränkungen auf bestimmte Repos.
+
+Token muss mit „hf_...“ beginnen.
+
+Speichere den Token als Replit Secret:
+
+Name: HUGGINGFACE_ACCESS_TOKEN
+
+Wert: (dein Token)
+
+3. Backend API-Request
+Der API-Call MUSS wie folgt aufgebaut sein:
+
+js
+Kopieren
+Bearbeiten
+const response = await fetch(HF_MODEL_URL, {
+  method: "POST",
+  headers: {
+    "Authorization": `Bearer ${process.env.HUGGINGFACE_ACCESS_TOKEN}`,
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({ inputs: prompt }),
+});
+Prompt (inputs): englisch, max. 300–400 Zeichen, möglichst klar und spezifisch.
+
+4. Fehlerbehandlung
+Prüfe nach jedem API-Call:
+
+response.ok und response.headers.get("content-type") enthält „image“
+
+Wenn kein Bild oder Fehler: Logge die vollständige API-Response – gib die Fehlermeldung an den Nutzer weiter.
+
+Bei Status 429/503/400, Info an den User: „Modell ausgelastet oder nicht erreichbar. Bitte später erneut versuchen.“
+
+5. Prompt-Logik
+Prompt muss im Frontend (oder Backend) aus diesen Feldern zusammengesetzt werden:
+
+User-Beschreibung (englisch oder automatisch übersetzt)
+
+Stil (z. B. „in black and grey style“)
+
+Körperstelle (z. B. „for upper arm“)
+
+Größe (z. B. „size: small (up to 5cm)“)
+
+Zusatz-Tags: „tattoo design, high resolution, clear lines, trending on instagram, detailed“
+
+Gesamtlänge des fertigen Prompts max. 400 Zeichen.
+
+6. Testen
+Backend neu starten!
+
+Im Frontend – Tattoo-Konfigurator aufrufen, eine englische Beschreibung + Optionen angeben, Bild generieren lassen.
+
+Falls Fehler, den genauen API-Response-Text loggen.
+
+Zusatz (optional, aber empfohlen):
+Ladeanimation, Fehler-UI und Fallback-Bild wie gehabt.
+
+Begrenze User-Input dynamisch, damit Prompt nicht zu lang wird.
+
+Prompt möglichst auf Englisch halten (am besten User-Text automatisch übersetzen).
+
+Zusammengefasst:
+Setze im Backend den Modell-Endpunkt auf
+https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-2-1
+und nutze einen Write- oder Fine-grained-Token mit Inference-Berechtigung ohne Repo-Einschränkung.
+API-Request exakt nach Vorgabe, Fehlerbehandlung wie beschrieben, Prompt-Logik wie oben, Backend neu starten.
