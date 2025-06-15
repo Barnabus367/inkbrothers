@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Palette, Camera, Ruler, User } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Palette, Camera, Ruler, User, Sparkles, Loader2 } from "lucide-react";
 
 const tattooStyles = [
   {
@@ -69,6 +69,11 @@ export default function ConfiguratorSection() {
     setSelectedStyle(styleId);
     setFormData((prev) => ({ ...prev, style: styleId }));
   };
+
+  // Monitor form changes for AI generation readiness
+  useEffect(() => {
+    checkGenerationReady();
+  }, [formData.description, selectedStyle]);
 
   const handleBodyPartChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const bodyPart = e.target.value;
@@ -218,23 +223,108 @@ export default function ConfiguratorSection() {
                 ERZÄHL UNS VON DEINER IDEE
               </h3>
 
-              <div className="space-y-6">
-                <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
-                    Detaillierte Beschreibung deiner Tattoo-Idee
-                  </label>
-                  <textarea
-                    rows={8}
-                    value={formData.description}
-                    onChange={(e) =>
-                      setFormData((prev) => ({
-                        ...prev,
-                        description: e.target.value,
-                      }))
-                    }
-                    className="form-textarea"
-                    placeholder="Erzähl uns von deiner Tattoo-Idee... (z.B. Stil, Motive, Bedeutung, Inspiration, Größenvorstellung)"
-                  />
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                {/* Description Input */}
+                <div className="space-y-6">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                      Detaillierte Beschreibung deiner Tattoo-Idee
+                    </label>
+                    <textarea
+                      rows={8}
+                      value={formData.description}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          description: e.target.value,
+                        }))
+                      }
+                      className="form-textarea"
+                      placeholder="Erzähl uns von deiner Tattoo-Idee... (z.B. Stil, Motive, Bedeutung, Inspiration, Größenvorstellung)"
+                    />
+                    <p className="text-xs text-gray-500 mt-2">
+                      Mindestens 5 Zeichen für KI-Vorschau erforderlich
+                    </p>
+                  </div>
+
+                  {/* AI Generation Button */}
+                  <div>
+                    <button
+                      onClick={generateTattooPreview}
+                      disabled={!canGenerate || isGenerating}
+                      className={`w-full flex items-center justify-center gap-3 py-3 px-6 rounded-lg font-medium transition-all duration-300 ${
+                        canGenerate && !isGenerating
+                          ? 'bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-400 text-white shadow-lg hover:shadow-red-500/25'
+                          : 'bg-gray-700 text-gray-400 cursor-not-allowed'
+                      }`}
+                    >
+                      {isGenerating ? (
+                        <>
+                          <Loader2 className="w-5 h-5 animate-spin" />
+                          KI generiert Vorschau...
+                        </>
+                      ) : (
+                        <>
+                          <Sparkles className="w-5 h-5" />
+                          KI-Vorschau generieren
+                        </>
+                      )}
+                    </button>
+                    
+                    {!canGenerate && (
+                      <p className="text-xs text-gray-500 mt-2 text-center">
+                        Wähle einen Stil und beschreibe deine Idee für eine KI-Vorschau
+                      </p>
+                    )}
+                  </div>
+                </div>
+
+                {/* AI Preview Panel */}
+                <div className="bg-gray-900/50 rounded-lg p-6 border border-gray-700">
+                  <h4 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                    <Camera className="w-5 h-5 text-red-500" />
+                    KI-Vorschau
+                  </h4>
+                  
+                  <div className="aspect-square bg-black/30 rounded-lg border-2 border-dashed border-gray-600 flex items-center justify-center relative overflow-hidden">
+                    {isGenerating && (
+                      <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-10">
+                        <div className="text-center">
+                          <Loader2 className="w-8 h-8 animate-spin text-red-500 mx-auto mb-2" />
+                          <p className="text-sm text-gray-300">KI erstellt dein Tattoo-Design...</p>
+                          <p className="text-xs text-gray-500 mt-1">Dies kann bis zu 40 Sekunden dauern</p>
+                        </div>
+                      </div>
+                    )}
+                    
+                    {generatedImage ? (
+                      <img 
+                        src={generatedImage} 
+                        alt="KI-generierte Tattoo-Vorschau"
+                        className="w-full h-full object-cover rounded-lg"
+                      />
+                    ) : (
+                      <div className="text-center text-gray-500">
+                        <Camera className="w-12 h-12 mx-auto mb-3 opacity-50" />
+                        <p className="text-sm">Deine KI-Vorschau erscheint hier</p>
+                        <p className="text-xs mt-1">Beschreibe deine Idee und klicke auf "KI-Vorschau generieren"</p>
+                      </div>
+                    )}
+                  </div>
+                  
+                  {generationError && (
+                    <div className="mt-4 p-3 bg-red-500/10 border border-red-500/30 rounded-lg">
+                      <p className="text-red-400 text-sm">{generationError}</p>
+                    </div>
+                  )}
+                  
+                  {generatedImage && !generationError && (
+                    <div className="mt-4 p-3 bg-green-500/10 border border-green-500/30 rounded-lg">
+                      <p className="text-green-400 text-sm">
+                        Vorschau erfolgreich generiert! Dies ist ein KI-Konzept - das finale Tattoo wird von unserem Künstler individuell angepasst.
+                      </p>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
