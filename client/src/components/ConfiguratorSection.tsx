@@ -101,7 +101,7 @@ export default function ConfiguratorSection() {
   };
 
   // Calculate dynamic character limits
-  const MAX_PROMPT_LENGTH = 400;
+  const MAX_PROMPT_LENGTH = 300;
   
   const calculatePromptSuffix = () => {
     const selectedStyleData = tattooStyles.find(s => s.id === selectedStyle);

@@ -87,8 +87,8 @@ function validateInput(description: string): { isValid: boolean; error?: string 
     return { isValid: false, error: "Beschreibung muss mindestens 5 Zeichen lang sein." };
   }
   
-  if (trimmed.length > 400) {
-    return { isValid: false, error: `Prompt darf maximal 400 Zeichen lang sein. Aktuell: ${trimmed.length} Zeichen.` };
+  if (trimmed.length > 300) {
+    return { isValid: false, error: `Prompt darf maximal 300 Zeichen lang sein. Aktuell: ${trimmed.length} Zeichen.` };
   }
   
   // Basic content filtering
@@ -130,87 +130,90 @@ async function generateTattooImage(prompt: string): Promise<{ success: boolean; 
     };
   }
   
-  // Limit prompt to 400 characters as specified
-  const limitedPrompt = prompt.slice(0, 400);
+  // Limit prompt to 300 characters as specified
+  const limitedPrompt = prompt.slice(0, 300);
   
   try {
-    // Primary Stable Diffusion 2.1 model endpoint as specified
-    const HF_MODEL_URL = "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-2-1";
+    // Reliable model endpoints for Inference API
+    const MODEL_ENDPOINTS = [
+      "https://api-inference.huggingface.co/models/runwayml/stable-diffusion-v1-5",
+      "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-2"
+    ];
     
-    console.log("Calling HuggingFace SD 2.1:", HF_MODEL_URL);
-    console.log("Prompt:", limitedPrompt);
-    console.log("Prompt length:", limitedPrompt.length);
-    
-    // Simplified JSON format as specified
-    const requestBody = {
-      inputs: limitedPrompt
-    };
-    
-    console.log("Request body:", JSON.stringify(requestBody));
-    
-    const response = await fetch(HF_MODEL_URL, {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${HUGGINGFACE_TOKEN}`,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(requestBody),
-      signal: AbortSignal.timeout(40000) // 40 second timeout
-    });
-    
-    console.log("HuggingFace response code:", response.status);
-    console.log("Response headers:", Object.fromEntries(response.headers.entries()));
-    console.log("Content-Type:", response.headers.get('content-type'));
-    
-    // Log complete response for debugging
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error(`❌ HuggingFace API error: ${response.status} - ${response.statusText}`);
-      console.error("Complete error response:", errorText);
+    for (let i = 0; i < MODEL_ENDPOINTS.length; i++) {
+      const HF_MODEL_URL = MODEL_ENDPOINTS[i];
+      const modelName = HF_MODEL_URL.includes('v1-5') ? 'SD v1-5' : 'SD v2';
       
-      // Parse specific error messages for user feedback
-      let userError = "KI-Generierung fehlgeschlagen.";
-      if (response.status === 404) {
-        userError = "Das SDXL-Modell ist nicht verfügbar. Prüfe Token-Berechtigung.";
-      } else if (response.status === 403) {
-        userError = "Token-Berechtigung fehlt für SDXL-Modell. Kontaktiere Administrator.";
-      } else if (response.status === 401) {
-        userError = "HuggingFace-Token ist ungültig oder abgelaufen.";
-      } else if (response.status === 503) {
-        userError = "SDXL-Service ist überlastet. Versuche es in wenigen Minuten erneut.";
-      } else if (errorText.includes("loading")) {
-        userError = "SDXL-Modell lädt noch. Versuche es in 1-2 Minuten erneut.";
-      } else if (errorText.includes("rate")) {
-        userError = "Zu viele KI-Anfragen. Warte einige Minuten und versuche es erneut.";
+      console.log(`\n=== Attempt ${i + 1}/${MODEL_ENDPOINTS.length}: ${modelName} ===`);
+      console.log("Calling HuggingFace:", HF_MODEL_URL);
+      console.log("Prompt:", limitedPrompt);
+      console.log("Prompt length:", limitedPrompt.length);
+      
+      const requestBody = { inputs: limitedPrompt };
+      console.log("Request body:", JSON.stringify(requestBody));
+      
+      const response = await fetch(HF_MODEL_URL, {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${HUGGINGFACE_TOKEN}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(requestBody),
+        signal: AbortSignal.timeout(40000)
+      });
+      
+      console.log("HuggingFace response code:", response.status);
+      console.log("Content-Type:", response.headers.get('content-type'));
+      
+      if (response.ok) {
+        const contentType = response.headers.get('content-type');
+        if (contentType?.includes('image/')) {
+          const imageBuffer = await response.arrayBuffer();
+          const base64Image = Buffer.from(imageBuffer).toString('base64');
+          const imageUrl = `data:image/png;base64,${base64Image}`;
+          
+          console.log(`✅ ${modelName} image generated successfully, size:`, imageBuffer.byteLength, "bytes");
+          return { success: true, image: imageUrl };
+        } else {
+          const responseText = await response.text();
+          console.log("Unexpected response format:", responseText);
+          continue; // Try next endpoint
+        }
+      } else {
+        const errorText = await response.text();
+        console.error(`❌ ${modelName} API error: ${response.status} - ${response.statusText}`);
+        console.error("Error details:", errorText);
+        
+        // Parse specific error messages
+        if (response.status === 404 || response.status === 403) {
+          console.log(`${modelName} not available, trying next model...`);
+          continue; // Try next endpoint
+        } else if (response.status === 429 || response.status === 503) {
+          return { 
+            success: false, 
+            error: `${modelName} ist überlastet. Versuche es in wenigen Minuten erneut.` 
+          };
+        } else if (errorText.includes("loading")) {
+          return { 
+            success: false, 
+            error: `${modelName} lädt noch. Versuche es in 1-2 Minuten erneut.` 
+          };
+        }
+        
+        // If this is the last endpoint, return specific error
+        if (i === MODEL_ENDPOINTS.length - 1) {
+          return { 
+            success: false, 
+            error: `Alle KI-Modelle nicht verfügbar. Status: ${response.status}, Details: ${errorText}` 
+          };
+        }
       }
-      
-      return { 
-        success: false, 
-        error: `${userError} (Status: ${response.status}, Details: ${errorText})` 
-      };
     }
     
-    // Check if response contains image
-    const contentType = response.headers.get('content-type');
-    if (contentType?.includes('image/')) {
-      // Success! Convert image to base64
-      const imageBuffer = await response.arrayBuffer();
-      const base64Image = Buffer.from(imageBuffer).toString('base64');
-      const imageUrl = `data:image/png;base64,${base64Image}`;
-      
-      console.log("✅ SDXL image generated successfully, size:", imageBuffer.byteLength, "bytes");
-      return { success: true, image: imageUrl };
-    } else {
-      // Unexpected content type
-      const responseText = await response.text();
-      console.log("Unexpected response format:", responseText);
-      console.log("Expected image but got:", contentType);
-      
-      return { 
-        success: false, 
-        error: `Unerwartetes Response-Format: ${contentType}. Erwartet: Bild` 
-      };
-    }
+    return { 
+      success: false, 
+      error: "Alle KI-Modelle sind nicht verfügbar. Versuche es später erneut." 
+    };
     
   } catch (error: any) {
     console.error('HuggingFace generation error:', error.message);
