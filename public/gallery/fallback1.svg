@@ -1,0 +1,32 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="wolfGrad" cx="50%" cy="30%" r="70%">
+      <stop offset="0%" style="stop-color:#333;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#111;stop-opacity:1" />
+    </radialGradient>
+  </defs>
+  
+  <!-- Wolf Head Silhouette -->
+  <path d="M256 80 C200 80 160 120 140 180 L120 200 C110 220 115 240 125 250 L140 260 C150 270 160 280 170 290 L180 310 C190 330 200 340 220 350 L240 360 C250 365 262 365 272 360 L292 350 C312 340 322 330 332 310 L342 290 C352 280 362 270 372 260 L387 250 C397 240 402 220 392 200 L372 180 C352 120 312 80 256 80 Z" fill="url(#wolfGrad)" stroke="#000" stroke-width="3"/>
+  
+  <!-- Eyes -->
+  <circle cx="220" cy="180" r="8" fill="#fff"/>
+  <circle cx="292" cy="180" r="8" fill="#fff"/>
+  <circle cx="220" cy="180" r="4" fill="#000"/>
+  <circle cx="292" cy="180" r="4" fill="#000"/>
+  
+  <!-- Snout -->
+  <ellipse cx="256" cy="220" rx="25" ry="35" fill="#222" stroke="#000" stroke-width="2"/>
+  <ellipse cx="256" cy="210" rx="8" ry="6" fill="#000"/>
+  
+  <!-- Ears -->
+  <path d="M180 120 L160 80 L200 100 Z" fill="#333" stroke="#000" stroke-width="2"/>
+  <path d="M332 120 L352 80 L312 100 Z" fill="#333" stroke="#000" stroke-width="2"/>
+  
+  <!-- Tribal patterns -->
+  <path d="M200 300 Q220 320 240 300 Q260 280 280 300 Q300 320 320 300" stroke="#000" stroke-width="4" fill="none"/>
+  <path d="M180 340 Q200 360 220 340 Q240 320 260 340 Q280 360 300 340" stroke="#000" stroke-width="3" fill="none"/>
+  
+  <!-- Title -->
+  <text x="256" y="480" text-anchor="middle" fill="#333" font-family="Arial" font-size="24" font-weight="bold">WOLF TRIBAL</text>
+</svg>

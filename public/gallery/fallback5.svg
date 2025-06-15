@@ -1,0 +1,42 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="treeGrad" cx="50%" cy="80%" r="60%">
+      <stop offset="0%" style="stop-color:#4a5d3a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2d3d2a;stop-opacity:1" />
+    </radialGradient>
+  </defs>
+  
+  <!-- Tree Trunk -->
+  <rect x="235" y="250" width="42" height="180" fill="#3d2f1f" stroke="#000" stroke-width="3"/>
+  
+  <!-- Tree Roots -->
+  <path d="M235 430 Q200 450 180 430 Q160 410 180 390" stroke="#3d2f1f" stroke-width="8" fill="none"/>
+  <path d="M277 430 Q312 450 332 430 Q352 410 332 390" stroke="#3d2f1f" stroke-width="8" fill="none"/>
+  <path d="M256 430 Q256 460 240 480 Q220 500 240 520" stroke="#3d2f1f" stroke-width="6" fill="none"/>
+  
+  <!-- Tree Crown Base -->
+  <circle cx="256" cy="180" r="120" fill="url(#treeGrad)" stroke="#000" stroke-width="4"/>
+  
+  <!-- Tree Branches -->
+  <path d="M180 150 Q150 120 130 140 Q110 160 130 180" stroke="#3d2f1f" stroke-width="12" fill="none"/>
+  <path d="M332 150 Q362 120 382 140 Q402 160 382 180" stroke="#3d2f1f" stroke-width="12" fill="none"/>
+  <path d="M256 80 Q256 50 240 30 Q220 10 240 0" stroke="#3d2f1f" stroke-width="10" fill="none"/>
+  
+  <!-- Leaves Detail -->
+  <circle cx="200" cy="130" r="25" fill="#4a5d3a" stroke="#000" stroke-width="2"/>
+  <circle cx="312" cy="130" r="25" fill="#4a5d3a" stroke="#000" stroke-width="2"/>
+  <circle cx="256" cy="100" r="30" fill="#4a5d3a" stroke="#000" stroke-width="2"/>
+  <circle cx="180" cy="200" r="20" fill="#4a5d3a" stroke="#000" stroke-width="2"/>
+  <circle cx="332" cy="200" r="20" fill="#4a5d3a" stroke="#000" stroke-width="2"/>
+  
+  <!-- Celtic Knots in Trunk -->
+  <path d="M245 280 Q255 270 265 280 Q275 290 265 300 Q255 310 245 300 Q235 290 245 280" stroke="#000" stroke-width="3" fill="none"/>
+  <path d="M245 320 Q255 310 265 320 Q275 330 265 340 Q255 350 245 340 Q235 330 245 320" stroke="#000" stroke-width="3" fill="none"/>
+  
+  <!-- Tree of Life Symbol -->
+  <circle cx="256" cy="180" r="40" stroke="#000" stroke-width="4" fill="none"/>
+  <path d="M256 140 L256 220 M230 165 Q256 180 282 165 M230 195 Q256 180 282 195" stroke="#000" stroke-width="2" fill="none"/>
+  
+  <!-- Title -->
+  <text x="256" y="500" text-anchor="middle" fill="#333" font-family="Arial" font-size="20" font-weight="bold">TREE OF LIFE</text>
+</svg>

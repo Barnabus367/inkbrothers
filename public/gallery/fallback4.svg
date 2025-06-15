@@ -1,0 +1,52 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="skullGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#666;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#333;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Skull Main Shape -->
+  <ellipse cx="256" cy="220" rx="80" ry="90" fill="url(#skullGrad)" stroke="#000" stroke-width="4"/>
+  
+  <!-- Eye Sockets -->
+  <ellipse cx="230" cy="200" rx="25" ry="30" fill="#000"/>
+  <ellipse cx="282" cy="200" rx="25" ry="30" fill="#000"/>
+  
+  <!-- Eye Glows -->
+  <circle cx="230" cy="195" r="8" fill="#ff4444" opacity="0.8"/>
+  <circle cx="282" cy="195" r="8" fill="#ff4444" opacity="0.8"/>
+  <circle cx="232" cy="193" r="3" fill="#fff"/>
+  <circle cx="284" cy="193" r="3" fill="#fff"/>
+  
+  <!-- Nasal Cavity -->
+  <path d="M256 230 L240 270 L256 285 L272 270 Z" fill="#000"/>
+  
+  <!-- Jaw -->
+  <rect x="220" y="280" width="72" height="25" rx="12" fill="url(#skullGrad)" stroke="#000" stroke-width="3"/>
+  
+  <!-- Teeth -->
+  <rect x="235" y="280" width="6" height="20" fill="#fff" stroke="#000" stroke-width="1"/>
+  <rect x="245" y="280" width="6" height="25" fill="#fff" stroke="#000" stroke-width="1"/>
+  <rect x="255" y="280" width="6" height="25" fill="#fff" stroke="#000" stroke-width="1"/>
+  <rect x="265" y="280" width="6" height="20" fill="#fff" stroke="#000" stroke-width="1"/>
+  <rect x="275" y="280" width="6" height="18" fill="#fff" stroke="#000" stroke-width="1"/>
+  
+  <!-- Cracks -->
+  <path d="M210 180 L200 170 L205 165" stroke="#000" stroke-width="3" fill="none"/>
+  <path d="M300 190 L315 180 L310 175" stroke="#000" stroke-width="3" fill="none"/>
+  <path d="M250 250 L245 240 L250 235" stroke="#000" stroke-width="2" fill="none"/>
+  
+  <!-- Crossbones -->
+  <rect x="140" y="350" width="80" height="12" rx="6" fill="#555" stroke="#000" stroke-width="2" transform="rotate(-30 180 356)"/>
+  <rect x="292" y="350" width="80" height="12" rx="6" fill="#555" stroke="#000" stroke-width="2" transform="rotate(30 332 356)"/>
+  
+  <!-- Bone Ends -->
+  <circle cx="160" cy="340" r="12" fill="#555" stroke="#000" stroke-width="2"/>
+  <circle cx="200" cy="372" r="12" fill="#555" stroke="#000" stroke-width="2"/>
+  <circle cx="352" cy="340" r="12" fill="#555" stroke="#000" stroke-width="2"/>
+  <circle cx="312" cy="372" r="12" fill="#555" stroke="#000" stroke-width="2"/>
+  
+  <!-- Title -->
+  <text x="256" y="480" text-anchor="middle" fill="#333" font-family="Arial" font-size="24" font-weight="bold">SKULL BONES</text>
+</svg>

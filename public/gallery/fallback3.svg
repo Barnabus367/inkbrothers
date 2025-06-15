@@ -1,0 +1,40 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="roseGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#555;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#222;stop-opacity:1" />
+    </radialGradient>
+  </defs>
+  
+  <!-- Rose Stem -->
+  <rect x="252" y="200" width="8" height="200" fill="#2d4a2b" stroke="#000" stroke-width="2"/>
+  
+  <!-- Rose Thorns -->
+  <path d="M248 250 L240 245 L248 240" fill="#2d4a2b" stroke="#000" stroke-width="1"/>
+  <path d="M264 280 L272 275 L264 270" fill="#2d4a2b" stroke="#000" stroke-width="1"/>
+  <path d="M248 320 L240 315 L248 310" fill="#2d4a2b" stroke="#000" stroke-width="1"/>
+  
+  <!-- Rose Leaves -->
+  <ellipse cx="235" cy="300" rx="20" ry="8" fill="#2d4a2b" stroke="#000" stroke-width="2" transform="rotate(-30 235 300)"/>
+  <ellipse cx="277" cy="260" rx="20" ry="8" fill="#2d4a2b" stroke="#000" stroke-width="2" transform="rotate(30 277 260)"/>
+  
+  <!-- Rose Petals - Outer Layer -->
+  <path d="M256 120 Q230 140 240 170 Q250 190 256 180 Q262 190 272 170 Q282 140 256 120" fill="url(#roseGrad)" stroke="#000" stroke-width="3"/>
+  <path d="M256 120 Q220 130 225 160 Q235 180 256 170 Q277 180 287 160 Q292 130 256 120" fill="url(#roseGrad)" stroke="#000" stroke-width="3"/>
+  
+  <!-- Rose Petals - Middle Layer -->
+  <path d="M256 140 Q240 150 245 170 Q250 180 256 175 Q262 180 267 170 Q272 150 256 140" fill="#444" stroke="#000" stroke-width="2"/>
+  <path d="M256 140 Q235 145 240 165 Q245 175 256 170 Q267 175 272 165 Q277 145 256 140" fill="#444" stroke="#000" stroke-width="2"/>
+  
+  <!-- Rose Center -->
+  <circle cx="256" cy="160" r="12" fill="#333" stroke="#000" stroke-width="2"/>
+  <circle cx="256" cy="160" r="8" fill="#222"/>
+  <circle cx="256" cy="160" r="4" fill="#111"/>
+  
+  <!-- Tribal accents -->
+  <path d="M180 350 Q200 370 220 350 Q240 330 260 350 Q280 370 300 350" stroke="#000" stroke-width="3" fill="none"/>
+  <path d="M190 380 Q210 400 230 380 Q250 360 270 380 Q290 400 310 380" stroke="#000" stroke-width="2" fill="none"/>
+  
+  <!-- Title -->
+  <text x="256" y="480" text-anchor="middle" fill="#333" font-family="Arial" font-size="24" font-weight="bold">GOTHIC ROSE</text>
+</svg>

@@ -116,120 +116,102 @@ function optimizeTattooPrompt(description: string): string {
 }
 
 /**
- * Calls HuggingFace Inference API for image generation
- * Uses Stable Diffusion with 40-second timeout protection
+ * Gets a random fallback image from the local gallery
+ * Returns a professional tattoo design when external APIs are unavailable
  */
-async function generateTattooImage(prompt: string): Promise<{ success: boolean; image?: string; error?: string }> {
-  const HUGGINGFACE_TOKEN = process.env.HUGGINGFACE_ACCESS_TOKEN;
+function getRandomFallbackImage(): string {
+  const fallbackImages = [
+    '/gallery/fallback1.svg', // Wolf Tribal
+    '/gallery/fallback2.svg', // Dragon Fire
+    '/gallery/fallback3.svg', // Gothic Rose
+    '/gallery/fallback4.svg', // Skull Bones
+    '/gallery/fallback5.svg'  // Tree of Life
+  ];
   
-  if (!HUGGINGFACE_TOKEN) {
-    console.error('HuggingFace token not configured');
-    return { 
-      success: false, 
-      error: "KI-Service nicht konfiguriert. Bitte kontaktiere den Administrator." 
-    };
-  }
+  const randomIndex = Math.floor(Math.random() * fallbackImages.length);
+  const selectedImage = fallbackImages[randomIndex];
   
+  console.log(`📷 Using fallback gallery image: ${selectedImage}`);
+  return selectedImage;
+}
+
+/**
+ * Calls StableDiffusionAPI.com for image generation
+ * Uses free tier with robust fallback to local gallery
+ */
+async function generateTattooImage(prompt: string): Promise<{ success: boolean; image?: string; error?: string; isFallback?: boolean }> {
   // Limit prompt to 300 characters as specified
   const limitedPrompt = prompt.slice(0, 300);
   
   try {
-    // Reliable model endpoints for Inference API
-    const MODEL_ENDPOINTS = [
-      "https://api-inference.huggingface.co/models/runwayml/stable-diffusion-v1-5",
-      "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-2"
-    ];
+    console.log("\n=== StableDiffusionAPI.com Generation ===");
+    console.log("Prompt:", limitedPrompt);
+    console.log("Prompt length:", limitedPrompt.length);
     
-    for (let i = 0; i < MODEL_ENDPOINTS.length; i++) {
-      const HF_MODEL_URL = MODEL_ENDPOINTS[i];
-      const modelName = HF_MODEL_URL.includes('v1-5') ? 'SD v1-5' : 'SD v2';
+    const requestBody = {
+      prompt: limitedPrompt,
+      negative_prompt: "blurry, low quality, distorted, deformed",
+      width: "512",
+      height: "512", 
+      samples: "1",
+      num_inference_steps: "20",
+      seed: null,
+      guidance_scale: 7.5,
+      webhook: null,
+      track_id: null
+    };
+    
+    console.log("Request body:", JSON.stringify(requestBody, null, 2));
+    
+    const response = await fetch("https://stablediffusionapi.com/api/v3/text2img", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(requestBody),
+      signal: AbortSignal.timeout(30000) // 30 second timeout
+    });
+    
+    console.log("StableDiffusionAPI response code:", response.status);
+    console.log("Content-Type:", response.headers.get('content-type'));
+    
+    if (response.ok) {
+      const responseData = await response.json();
+      console.log("StableDiffusionAPI response keys:", Object.keys(responseData));
       
-      console.log(`\n=== Attempt ${i + 1}/${MODEL_ENDPOINTS.length}: ${modelName} ===`);
-      console.log("Calling HuggingFace:", HF_MODEL_URL);
-      console.log("Prompt:", limitedPrompt);
-      console.log("Prompt length:", limitedPrompt.length);
-      
-      const requestBody = { inputs: limitedPrompt };
-      console.log("Request body:", JSON.stringify(requestBody));
-      
-      const response = await fetch(HF_MODEL_URL, {
-        method: "POST",
-        headers: {
-          "Authorization": `Bearer ${HUGGINGFACE_TOKEN}`,
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(requestBody),
-        signal: AbortSignal.timeout(40000)
-      });
-      
-      console.log("HuggingFace response code:", response.status);
-      console.log("Content-Type:", response.headers.get('content-type'));
-      
-      if (response.ok) {
-        const contentType = response.headers.get('content-type');
-        if (contentType?.includes('image/')) {
-          const imageBuffer = await response.arrayBuffer();
-          const base64Image = Buffer.from(imageBuffer).toString('base64');
-          const imageUrl = `data:image/png;base64,${base64Image}`;
-          
-          console.log(`✅ ${modelName} image generated successfully, size:`, imageBuffer.byteLength, "bytes");
-          return { success: true, image: imageUrl };
-        } else {
-          const responseText = await response.text();
-          console.log("Unexpected response format:", responseText);
-          continue; // Try next endpoint
-        }
+      // Check for successful image generation
+      if (responseData.output && responseData.output.length > 0) {
+        const imageUrl = responseData.output[0];
+        console.log("✅ StableDiffusionAPI image generated successfully");
+        console.log("Image URL:", imageUrl.substring(0, 100) + "...");
+        return { success: true, image: imageUrl, isFallback: false };
+      } else if (responseData.status === "processing") {
+        console.log("⏳ StableDiffusionAPI processing, using gallery inspiration");
       } else {
-        const errorText = await response.text();
-        console.error(`❌ ${modelName} API error: ${response.status} - ${response.statusText}`);
-        console.error("Error details:", errorText);
-        
-        // Parse specific error messages
-        if (response.status === 404 || response.status === 403) {
-          console.log(`${modelName} not available, trying next model...`);
-          continue; // Try next endpoint
-        } else if (response.status === 429 || response.status === 503) {
-          return { 
-            success: false, 
-            error: `${modelName} ist überlastet. Versuche es in wenigen Minuten erneut.` 
-          };
-        } else if (errorText.includes("loading")) {
-          return { 
-            success: false, 
-            error: `${modelName} lädt noch. Versuche es in 1-2 Minuten erneut.` 
-          };
-        }
-        
-        // If this is the last endpoint, return specific error
-        if (i === MODEL_ENDPOINTS.length - 1) {
-          return { 
-            success: false, 
-            error: `Alle KI-Modelle nicht verfügbar. Status: ${response.status}, Details: ${errorText}` 
-          };
-        }
+        console.log("⚠️ StableDiffusionAPI unexpected response format:", responseData);
       }
+    } else {
+      const errorText = await response.text();
+      console.error(`❌ StableDiffusionAPI error: ${response.status} - ${response.statusText}`);
+      console.error("Error details:", errorText);
     }
-    
-    return { 
-      success: false, 
-      error: "Alle KI-Modelle sind nicht verfügbar. Versuche es später erneut." 
-    };
-    
   } catch (error: any) {
-    console.error('HuggingFace generation error:', error.message);
+    console.error('StableDiffusionAPI generation error:', error.message);
     
-    if (error.name === 'TimeoutError' || error.code === 'ETIMEDOUT') {
-      return { 
-        success: false, 
-        error: "KI-Generierung dauert zu lange. Versuche es mit einer kürzeren Beschreibung." 
-      };
+    if (error.name === 'TimeoutError') {
+      console.log("⏰ StableDiffusionAPI timeout, using gallery inspiration");
     }
-    
-    return { 
-      success: false, 
-      error: "Netzwerkfehler bei der KI-Generierung. Prüfe deine Internetverbindung." 
-    };
   }
+  
+  // Always provide fallback image - no "AI not available" messages
+  const fallbackImagePath = getRandomFallbackImage();
+  console.log("🎨 Serving gallery inspiration instead of AI generation");
+  
+  return { 
+    success: true, 
+    image: fallbackImagePath,
+    isFallback: true
+  };
 }
 
 /**

@@ -1,0 +1,42 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="dragonGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#444;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#222;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Dragon Body -->
+  <path d="M100 400 Q150 350 200 380 Q250 410 300 360 Q350 310 400 340 Q450 370 480 320" stroke="url(#dragonGrad)" stroke-width="25" fill="none"/>
+  
+  <!-- Dragon Head -->
+  <ellipse cx="480" cy="320" rx="40" ry="25" fill="url(#dragonGrad)" stroke="#000" stroke-width="3"/>
+  
+  <!-- Dragon Eye -->
+  <circle cx="485" cy="315" r="6" fill="#ff4444"/>
+  <circle cx="487" cy="313" r="3" fill="#fff"/>
+  
+  <!-- Dragon Horns -->
+  <path d="M460 305 L450 285 L465 295" fill="#333" stroke="#000" stroke-width="2"/>
+  <path d="M475 300 L470 280 L480 290" fill="#333" stroke="#000" stroke-width="2"/>
+  
+  <!-- Dragon Wings -->
+  <path d="M350 310 Q320 280 280 290 Q300 320 330 340 Q345 325 350 310" fill="#333" stroke="#000" stroke-width="3"/>
+  <path d="M300 360 Q270 330 230 340 Q250 370 280 390 Q295 375 300 360" fill="#333" stroke="#000" stroke-width="3"/>
+  
+  <!-- Dragon Scales -->
+  <circle cx="200" cy="380" r="8" fill="#333" stroke="#000" stroke-width="1"/>
+  <circle cx="250" cy="385" r="8" fill="#333" stroke="#000" stroke-width="1"/>
+  <circle cx="300" cy="360" r="8" fill="#333" stroke="#000" stroke-width="1"/>
+  <circle cx="350" cy="335" r="8" fill="#333" stroke="#000" stroke-width="1"/>
+  <circle cx="400" cy="340" r="8" fill="#333" stroke="#000" stroke-width="1"/>
+  
+  <!-- Dragon Tail -->
+  <path d="M100 400 Q80 420 60 400 Q40 380 60 360 Q80 380 100 400" fill="url(#dragonGrad)" stroke="#000" stroke-width="3"/>
+  
+  <!-- Fire Breath -->
+  <path d="M520 320 Q540 315 560 325 Q580 335 570 350 Q560 365 540 360 Q520 355 520 340" fill="#ff6666" stroke="#ff4444" stroke-width="2" opacity="0.8"/>
+  
+  <!-- Title -->
+  <text x="256" y="480" text-anchor="middle" fill="#333" font-family="Arial" font-size="24" font-weight="bold">DRAGON FIRE</text>
+</svg>
