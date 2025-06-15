@@ -73,7 +73,7 @@ export default function ConfiguratorSection() {
   // Monitor form changes for AI generation readiness
   useEffect(() => {
     checkGenerationReady();
-  }, [formData.description, selectedStyle]);
+  }, [formData.description, selectedStyle, selectedBodyPart, formData.size]);
 
   const handleBodyPartChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const bodyPart = e.target.value;
@@ -100,6 +100,46 @@ export default function ConfiguratorSection() {
     setCanGenerate(hasDescription && hasStyle);
   };
 
+  // Create comprehensive AI prompt from all user inputs
+  const buildAIPrompt = () => {
+    const selectedStyleData = tattooStyles.find(s => s.id === selectedStyle);
+    const selectedBodyPartData = bodyParts.find(b => b.id === selectedBodyPart);
+    
+    // Style mapping to English
+    const styleText = selectedStyleData ? `in ${selectedStyleData.name.toLowerCase().replace('&', 'and')} style` : "";
+    
+    // Body part mapping to English
+    const bodyPartMapping: Record<string, string> = {
+      'arm': 'upper arm',
+      'chest': 'chest',
+      'back': 'back',
+      'leg': 'leg', 
+      'shoulder': 'shoulder',
+      'wrist': 'wrist'
+    };
+    const bodyPartText = selectedBodyPart ? `for the ${bodyPartMapping[selectedBodyPart] || selectedBodyPart}` : "";
+    
+    // Size mapping to English
+    const sizeMapping: Record<string, string> = {
+      'small': 'size: small (up to 5cm)',
+      'medium': 'size: medium (5-15cm)', 
+      'large': 'size: large (15-25cm)',
+      'xlarge': 'size: very large (over 25cm)'
+    };
+    const sizeText = formData.size ? sizeMapping[formData.size] : "";
+    
+    // Combine all elements into optimal English prompt
+    const fullPrompt = [
+      formData.description,
+      styleText,
+      bodyPartText,
+      sizeText,
+      "tattoo design, high resolution, clear lines, trending on instagram, detailed"
+    ].filter(Boolean).join(", ");
+    
+    return fullPrompt;
+  };
+
   // AI Image Generation Function
   const generateTattooPreview = async () => {
     if (!canGenerate || isGenerating) return;
@@ -108,9 +148,7 @@ export default function ConfiguratorSection() {
     setGenerationError(null);
     
     try {
-      const selectedStyleData = tattooStyles.find(s => s.id === selectedStyle);
-      const stylePrompt = selectedStyleData ? ` in ${selectedStyleData.name.toLowerCase()} style` : "";
-      const fullDescription = `${formData.description}${stylePrompt}`;
+      const fullPrompt = buildAIPrompt();
       
       const response = await fetch('/api/generate-tattoo', {
         method: 'POST',
@@ -118,7 +156,7 @@ export default function ConfiguratorSection() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          description: fullDescription
+          description: fullPrompt
         }),
       });
       
@@ -275,6 +313,19 @@ export default function ConfiguratorSection() {
                       <p className="text-xs text-gray-500 mt-2 text-center">
                         Wähle einen Stil und beschreibe deine Idee für eine KI-Vorschau
                       </p>
+                    )}
+
+                    {/* AI Prompt Preview */}
+                    {canGenerate && (
+                      <div className="mt-4 p-3 bg-gray-800/50 rounded-lg border border-gray-600">
+                        <h5 className="text-sm font-medium text-gray-300 mb-2">KI-Prompt Vorschau:</h5>
+                        <p className="text-xs text-gray-400 font-mono leading-relaxed">
+                          "{buildAIPrompt()}"
+                        </p>
+                        <p className="text-xs text-gray-500 mt-2">
+                          Dieser Prompt wird an die KI gesendet (inkl. Stil, Körperstelle, Größe)
+                        </p>
+                      </div>
                     )}
                   </div>
                 </div>
