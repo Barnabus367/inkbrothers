@@ -136,70 +136,122 @@ function getRandomFallbackImage(): string {
 }
 
 /**
- * Calls StableDiffusionAPI.com for image generation
- * Uses free tier with robust fallback to local gallery
+ * Calls external AI APIs for image generation with multiple fallbacks
+ * 1. StableDiffusionAPI.com (with API key)
+ * 2. HuggingFace Spaces (gradio API)
+ * 3. Local gallery as final fallback
  */
 async function generateTattooImage(prompt: string): Promise<{ success: boolean; image?: string; error?: string; isFallback?: boolean }> {
-  // Limit prompt to 300 characters as specified
   const limitedPrompt = prompt.slice(0, 300);
   
-  try {
-    console.log("\n=== StableDiffusionAPI.com Generation ===");
-    console.log("Prompt:", limitedPrompt);
-    console.log("Prompt length:", limitedPrompt.length);
-    
-    const requestBody = {
-      prompt: limitedPrompt,
-      negative_prompt: "blurry, low quality, distorted, deformed",
-      width: "512",
-      height: "512", 
-      samples: "1",
-      num_inference_steps: "20",
-      seed: null,
-      guidance_scale: 7.5,
-      webhook: null,
-      track_id: null
-    };
-    
-    console.log("Request body:", JSON.stringify(requestBody, null, 2));
-    
-    const response = await fetch("https://stablediffusionapi.com/api/v3/text2img", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(requestBody),
-      signal: AbortSignal.timeout(30000) // 30 second timeout
-    });
-    
-    console.log("StableDiffusionAPI response code:", response.status);
-    console.log("Content-Type:", response.headers.get('content-type'));
-    
-    if (response.ok) {
-      const responseData = await response.json();
-      console.log("StableDiffusionAPI response keys:", Object.keys(responseData));
+  // Try multiple external APIs with proper authentication
+  const STABLE_DIFFUSION_API_KEY = process.env.STABLE_DIFFUSION_API_KEY;
+  
+  if (STABLE_DIFFUSION_API_KEY) {
+    try {
+      console.log("\n=== StableDiffusionAPI.com Generation ===");
+      console.log("Prompt:", limitedPrompt);
+      console.log("Prompt length:", limitedPrompt.length);
+      console.log("API Key length:", STABLE_DIFFUSION_API_KEY.length);
       
-      // Check for successful image generation
-      if (responseData.output && responseData.output.length > 0) {
-        const imageUrl = responseData.output[0];
-        console.log("✅ StableDiffusionAPI image generated successfully");
-        console.log("Image URL:", imageUrl.substring(0, 100) + "...");
-        return { success: true, image: imageUrl, isFallback: false };
-      } else if (responseData.status === "processing") {
-        console.log("⏳ StableDiffusionAPI processing, using gallery inspiration");
+      const requestBody = {
+        key: STABLE_DIFFUSION_API_KEY,
+        prompt: limitedPrompt,
+        negative_prompt: "blurry, low quality, distorted, deformed, text",
+        width: "512",
+        height: "512", 
+        samples: "1",
+        num_inference_steps: "20",
+        guidance_scale: 7.5,
+        safety_checker: "yes",
+        enhance_prompt: "yes"
+      };
+      
+      console.log("Request body keys:", Object.keys(requestBody));
+      
+      const response = await fetch("https://stablediffusionapi.com/api/v3/text2img", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(requestBody),
+        signal: AbortSignal.timeout(30000)
+      });
+      
+      console.log("StableDiffusionAPI response code:", response.status);
+      console.log("Response headers:", Object.fromEntries(response.headers.entries()));
+      
+      if (response.ok) {
+        const responseData = await response.json();
+        console.log("StableDiffusionAPI response keys:", Object.keys(responseData));
+        console.log("Full response:", responseData);
+        
+        if (responseData.output && responseData.output.length > 0) {
+          const imageUrl = responseData.output[0];
+          console.log("✅ StableDiffusionAPI image generated successfully");
+          console.log("Image URL preview:", imageUrl.substring(0, 100));
+          return { success: true, image: imageUrl, isFallback: false };
+        } else if (responseData.status === "processing") {
+          console.log("⏳ StableDiffusionAPI is processing, will use gallery");
+        } else {
+          console.log("⚠️ Unexpected response format:", responseData);
+        }
       } else {
-        console.log("⚠️ StableDiffusionAPI unexpected response format:", responseData);
+        const errorText = await response.text();
+        console.error(`❌ StableDiffusionAPI error: ${response.status}`);
+        console.error("Error details:", errorText);
+        
+        if (response.status === 401) {
+          console.error("❌ Invalid API key for StableDiffusionAPI");
+        } else if (response.status === 429) {
+          console.error("❌ Rate limit exceeded for StableDiffusionAPI");
+        }
       }
-    } else {
-      const errorText = await response.text();
-      console.error(`❌ StableDiffusionAPI error: ${response.status} - ${response.statusText}`);
-      console.error("Error details:", errorText);
+    } catch (error: any) {
+      console.error('StableDiffusionAPI generation error:', error.message);
     }
-  } catch (error: any) {
-    console.error('StableDiffusionAPI generation error:', error.message);
-    
-    if (error.name === 'TimeoutError') {
-      console.log("⏰ StableDiffusionAPI timeout, using gallery inspiration");
+  }
+  
+  // Try HuggingFace Spaces as fallback
+  const HUGGINGFACE_TOKEN = process.env.HUGGINGFACE_ACCESS_TOKEN;
+  
+  if (HUGGINGFACE_TOKEN) {
+    try {
+      console.log("\n=== HuggingFace Spaces Generation ===");
+      console.log("Prompt:", limitedPrompt);
+      
+      // Try popular Stable Diffusion space
+      const spaceUrl = "https://api-inference.huggingface.co/models/runwayml/stable-diffusion-v1-5";
+      
+      const response = await fetch(spaceUrl, {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${HUGGINGFACE_TOKEN}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ inputs: limitedPrompt }),
+        signal: AbortSignal.timeout(30000)
+      });
+      
+      console.log("HuggingFace Spaces response code:", response.status);
+      
+      if (response.ok) {
+        const contentType = response.headers.get('content-type');
+        if (contentType?.includes('image/')) {
+          const imageBuffer = await response.arrayBuffer();
+          const base64Image = Buffer.from(imageBuffer).toString('base64');
+          const imageUrl = `data:image/png;base64,${base64Image}`;
+          
+          console.log("✅ HuggingFace Spaces image generated successfully");
+          return { success: true, image: imageUrl, isFallback: false };
+        }
+      } else {
+        const errorText = await response.text();
+        console.error(`❌ HuggingFace Spaces error: ${response.status}`);
+        console.error("Error details:", errorText);
+      }
+    } catch (error: any) {
+      console.error('HuggingFace Spaces generation error:', error.message);
     }
   }
   
@@ -242,7 +294,7 @@ router.post('/generate-tattoo', tattooGenerationLimit, async (req, res) => {
     const optimizedPrompt = optimizeTattooPrompt(description);
     console.log(`[${new Date().toISOString()}] Optimized prompt: "${optimizedPrompt.substring(0, 100)}..."`);
     
-    // Generate image with HuggingFace
+    // Generate image with StableDiffusionAPI or fallback to gallery
     const result = await generateTattooImage(optimizedPrompt);
     
     const duration = Date.now() - startTime;
@@ -251,12 +303,17 @@ router.post('/generate-tattoo', tattooGenerationLimit, async (req, res) => {
     if (result.success && result.image) {
       return res.json({
         image: result.image,
-        error: null
+        isFallback: result.isFallback || false,
+        message: result.isFallback 
+          ? "KI ist aktuell ausgelastet, hier unsere Top-Tattoo-Inspiration!"
+          : "KI-generiertes Tattoo-Design basierend auf deiner Beschreibung"
       });
     } else {
+      // This shouldn't happen with the new system, but keep as safety net
       return res.status(200).json({
         image: getFallbackImage(),
-        error: result.error || "Unbekannter Fehler bei der Bildgenerierung."
+        isFallback: true,
+        message: "KI ist aktuell ausgelastet, hier unsere Top-Tattoo-Inspiration!"
       });
     }
     

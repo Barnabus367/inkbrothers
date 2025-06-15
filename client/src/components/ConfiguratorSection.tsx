@@ -167,9 +167,16 @@ export default function ConfiguratorSection() {
       
       if (result.image) {
         setGeneratedImage(result.image);
+        
+        // Show appropriate message based on source
+        if (result.isFallback) {
+          setGenerationError(result.message || "KI ist aktuell ausgelastet, hier unsere Top-Tattoo-Inspiration!");
+        } else {
+          setGenerationError(null); // Clear any previous errors for successful AI generation
+        }
       }
       
-      if (result.error) {
+      if (result.error && !result.image) {
         setGenerationError(result.error);
       }
       
