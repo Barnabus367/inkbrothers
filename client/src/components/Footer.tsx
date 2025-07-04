@@ -59,25 +59,13 @@ export default function Footer() {
 
           <div className="flex justify-center space-x-6 mb-8">
             <a
-              href="#"
-              className="text-gray-400 hover:text-ink-red transition-colors"
-              aria-label="Twitter"
-            >
-              <Twitter className="w-6 h-6" />
-            </a>
-            <a
-              href="#"
+              href="https://www.instagram.com/ink_brothers_regensdorf/"
               className="text-gray-400 hover:text-ink-red transition-colors"
               aria-label="Instagram"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               <Instagram className="w-6 h-6" />
-            </a>
-            <a
-              href="#"
-              className="text-gray-400 hover:text-ink-red transition-colors"
-              aria-label="Facebook"
-            >
-              <Facebook className="w-6 h-6" />
             </a>
           </div>
 
