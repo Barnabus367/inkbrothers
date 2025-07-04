@@ -54,7 +54,7 @@ export default function ContactSection() {
                       InkBrothers Studio
                     </p>
                     <p className="text-gray-400">
-                      Bahnhofstrasse 42, 8001 Zürich
+                      Watterstrasse 10, 8105 Regensdorf
                     </p>
                   </div>
                 </div>
@@ -63,7 +63,9 @@ export default function ContactSection() {
                   <Phone className="w-6 h-6 text-ink-red mr-4 flex-shrink-0" />
                   <div>
                     <p className="text-ink-white font-semibold">
-                      +41 44 123 45 67
+                      +41 44 558 24 33
+
+
                     </p>
                   </div>
                 </div>
