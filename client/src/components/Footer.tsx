@@ -45,11 +45,7 @@ export default function Footer() {
             </span>
           </div>
 
-          <div className="mb-4">
-            <p className="text-xl text-gray-300">
-              InkBrothers Studio Zürich – Est. 2012
-            </p>
-          </div>
+      
 
           <div className="mb-8">
             <p className="text-lg font-semibold text-ink-red italic">
@@ -71,7 +67,7 @@ export default function Footer() {
 
           <div className="border-t border-gray-700 pt-8">
             <p className="text-gray-500 text-sm">
-              © 2024 InkBrothers Studio. Alle Rechte vorbehalten.
+              © 2025 InkBrothers Studio. Alle Rechte vorbehalten.
             </p>
           </div>
         </div>

@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import Navigation from "@/components/Navigation";
 import HeroSection from "@/components/HeroSection";
 import PortfolioSection from "@/components/PortfolioSection";
+import TestimonialsSection from "@/components/TestimonialsSection";
 import CrewSection from "@/components/CrewSection";
 import ConfiguratorSection from "@/components/ConfiguratorSection";
 import ContactSection from "@/components/ContactSection";
@@ -52,9 +53,10 @@ export default function Home() {
       <Navigation />
       <HeroSection />
       <PortfolioSection />
+      <TestimonialsSection />
       <CrewSection />
-      <ExperimentalFeatures />
-      <ConfiguratorSection />
+      {/* <ExperimentalFeatures /> */}
+      {/* <ConfiguratorSection /> */}
       <ContactSection />
       <Footer />
     </div>

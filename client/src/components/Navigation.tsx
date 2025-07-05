@@ -81,20 +81,26 @@ export default function Navigation() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="flex items-center justify-between h-16">
-          {/* Interactive Logo */}
+          {/* Interactive Logo as Home Button */}
           <div className="flex-shrink-0 relative group">
-            <span
-              className="font-bebas text-2xl text-ink-white tracking-wider transition-all duration-300 hover:scale-110"
-              style={{
-                textShadow: `0 0 ${10 + mousePosition.x * 20}px rgba(166, 40, 46, ${0.5 + mousePosition.x * 0.5})`,
-              }}
+            <a
+              href="/"
+              aria-label="Zur Startseite"
+              className="focus:outline-none"
+              style={{ display: 'inline-block' }}
             >
-              INK
-              <span className="text-ink-red animate-neon-flicker">
-                BROTHERS
+              <span
+                className="font-bebas text-2xl text-ink-white tracking-wider transition-all duration-300 hover:scale-110"
+                style={{
+                  textShadow: `0 0 ${10 + mousePosition.x * 20}px rgba(166, 40, 46, ${0.5 + mousePosition.x * 0.5})`,
+                }}
+              >
+                INK
+                <span className="text-ink-red animate-neon-flicker">
+                  BROTHERS
+                </span>
               </span>
-            </span>
-
+            </a>
             {/* Logo particles */}
             <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300">
               {Array.from({ length: 5 }).map((_, i) => (
