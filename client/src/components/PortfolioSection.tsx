@@ -8,6 +8,8 @@ import skullTattoo from "@assets/image_1749869022370.png";
 import musicSleeve from "@assets/image_1749869028566.png";
 import duplicateClown from "@assets/01b418e4-1ff8-47df-9237-b4b132956efa.png";
 
+import davidMisaArm from "@assets/david-misa-arm.jpg";
+
 const portfolioItems = [
   {
     id: 1,
@@ -56,7 +58,7 @@ const portfolioItems = [
   },
   {
     id: 6,
-    image: duplicateClown,
+    image: davidMisaArm,
     title: "Horror Character Art",
     year: "2024",
     artist: "Roberto",
