@@ -1,14 +1,13 @@
 import { useState, useRef, useEffect } from "react";
 import { Instagram, ExternalLink, Eye } from "lucide-react";
 
-import clownTattoo from "@assets/image_1749869004142.png";
-import backPiece from "@assets/image_1749869009808.png";
-import portraitTattoo from "@assets/image_1749869016181.png";
-import skullTattoo from "@assets/image_1749869022370.png";
-import musicSleeve from "@assets/image_1749869028566.png";
-import duplicateClown from "@assets/01b418e4-1ff8-47df-9237-b4b132956efa.png";
 
-import davidMisaArm from "@assets/david-misa-arm.jpg";
+const clownTattoo = "https://res.cloudinary.com/do7yh4dll/image/upload/f_auto,q_auto,w_1200/v1751675091/image_1749869004142_xgujxw.png";
+const backPiece = "https://res.cloudinary.com/do7yh4dll/image/upload/f_auto,q_auto,w_1200/v1751675092/image_1749869009808_djqeg3.png";
+const portraitTattoo = "https://res.cloudinary.com/do7yh4dll/image/upload/f_auto,q_auto,w_1200/v1751675092/image_1749869016181_mmkajj.png";
+const skullTattoo = "https://res.cloudinary.com/do7yh4dll/image/upload/f_auto,q_auto,w_1200/v1751675091/image_1749869022370_qtalye.png";
+const musicSleeve = "https://res.cloudinary.com/do7yh4dll/image/upload/f_auto,q_auto,w_1200/v1751675091/image_1749869028566_ylixan.png";
+const davidMisaArm = "https://res.cloudinary.com/do7yh4dll/image/upload/f_auto,q_auto,w_1200/v1751675091/david-misa-arm_ffcr4w.jpg";
 
 const portfolioItems = [
   {
