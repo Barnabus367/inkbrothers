@@ -123,7 +123,6 @@ export default function Navigation() {
               {[
                 { href: "#work", text: "WORK" },
                 { href: "#artists", text: "ARTISTS" },
-                { href: "#konfigurator", text: "KONFIGURATOR" },
                 { href: "#connect", text: "CONNECT" },
               ].map((item, index) => (
                 <a
@@ -191,7 +190,6 @@ export default function Navigation() {
               {[
                 { href: "#work", text: "WORK" },
                 { href: "#artists", text: "ARTISTS" },
-                { href: "#konfigurator", text: "KONFIGURATOR" },
                 { href: "#connect", text: "CONNECT" },
               ].map((item, index) => (
                 <a
